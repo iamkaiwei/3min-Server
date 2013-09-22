@@ -1,13 +1,13 @@
 class Api::V1::ProductsController < Api::BaseController
 	def index
-		@products = Product.all
+		@products = Product.paginate(:page => params[:page], :per_page => params[:per_page])
 	end
 
 	def create
 		@product = Product.new(product_params)
 
 		if @product.save
-			render_success(:data => @product.attributes)
+			render_success(:product => @product.attributes)
 		else
 			render_failure(:details => @product.errors.full_messages.join("\n"))
 		end
@@ -15,7 +15,7 @@ class Api::V1::ProductsController < Api::BaseController
 
 	def update
 		if @product.update_attributes(product_params)
-			render_success(:data => @product.attributes)
+			render_success(:product => @product.attributes)
 		else
 			render_failure(:details => @product.errors.full_messages.join("\n"))
 		end
@@ -32,6 +32,6 @@ class Api::V1::ProductsController < Api::BaseController
 private
 
 	def product_params
-		params.require(:product).permit(:user_id, :name, :category_id, :description, :price, :sold_out)
+		params.permit(:user_id, :name, :category_id, :description, :price, :sold_out)
 	end
 end

@@ -3,7 +3,7 @@ ThreeminsServer::Application.routes.draw do
 
 	root :to => "home#index"
 
-	namespace :api, :defaults => { format: :json } do
+	namespace :api do
 		namespace :v1 do
 			resources :users, :except => [:new, :edit] do
 				collection do
