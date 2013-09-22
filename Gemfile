@@ -42,3 +42,8 @@ group :development, :test do
 	gem 'pry'
 end
 
+# Database gems
+group :db do
+	gem 'faker'
+end
+

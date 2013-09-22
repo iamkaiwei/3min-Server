@@ -1,7 +1,5 @@
-class CategoriesController < ApiBaseController
+class Api::V1::CategoriesController < Api::BaseController
 	def index
-	end
-
-	def show
+		respond_with Category.all
 	end
 end
