@@ -1,8 +1,8 @@
 namespace :db do
-	desc "Reset database"
+	desc "Reset everything in the database"
 	task :hard_reset => :environment do
 		begin
-			ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"] || Rails.env)
+			ActiveRecord::Base.connection_pool.disconnect!
 
 			ActiveRecord::Base.connection.tables.each do |table_name|
 				ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS #{table_name}")

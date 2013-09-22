@@ -14,12 +14,7 @@ ThreeminsServer::Application.routes.draw do
 
 			resources :categories, :only => [:index, :show]
 
-			resources :products, :except => [:new, :edit] do
-				collection do
-					get :details
-					get :trending
-				end
-			end
+			resources :products, :except => [:new, :edit]
 
 			resources :transactions, :except => [:new, :edit, :destroy] do
 				collection do

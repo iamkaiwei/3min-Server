@@ -1,8 +1,12 @@
 module Api::ActiveRecordHelper
-	def fetch_object(params)
-		variable = params[:controller].split("/").last.singularize
-		klass = variable.classify.constantize
+	include ApplicationHelper
 
-		instance_variable_set("@#{variable}".to_sym, klass.find_by_id(params[:id]))
+	def fetch_object(params)
+		variable_name = get_variable_name(params)
+		klass = variable_name.classify.constantize
+
+		raise ActiveRecord::RecordNotFound unless klass.exists?(:id => params[:id])
+
+		instance_variable_set("@#{variable_name}".to_sym, klass.find_by_id(params[:id]))
 	end
 end

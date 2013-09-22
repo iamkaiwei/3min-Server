@@ -14,23 +14,27 @@
 ActiveRecord::Schema.define(version: 20130921174305) do
 
   create_table "categories", force: true do |t|
-    t.string "name"
-    t.string "photo_url"
+    t.string   "name"
+    t.string   "photo_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
 
   create_table "products", force: true do |t|
-    t.integer "user_id"
-    t.string  "name"
-    t.integer "category_id"
-    t.text    "description"
-    t.decimal "price"
-    t.boolean "sold_out",    default: false
-    t.string  "photos_urls",                 array: true
-    t.hstore  "comments",                    array: true
-    t.integer "likes"
-    t.integer "dislikes"
+    t.integer  "user_id"
+    t.string   "name"
+    t.integer  "category_id"
+    t.text     "description"
+    t.decimal  "price"
+    t.boolean  "sold_out",    default: false
+    t.string   "photos_urls",                 array: true
+    t.hstore   "comments",                    array: true
+    t.integer  "likes"
+    t.integer  "dislikes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
@@ -41,11 +45,13 @@ ActiveRecord::Schema.define(version: 20130921174305) do
   add_index "products", ["user_id"], name: "index_products_on_user_id", using: :btree
 
   create_table "transactions", force: true do |t|
-    t.integer "buyer_id"
-    t.integer "seller_id"
-    t.integer "product_id"
-    t.string  "meetup_place"
-    t.hstore  "chat",         array: true
+    t.integer  "buyer_id"
+    t.integer  "seller_id"
+    t.integer  "product_id"
+    t.string   "meetup_place"
+    t.hstore   "chat",         array: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "transactions", ["buyer_id"], name: "index_transactions_on_buyer_id", using: :btree

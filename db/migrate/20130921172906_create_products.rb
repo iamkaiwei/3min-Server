@@ -13,6 +13,8 @@ class CreateProducts < ActiveRecord::Migration
       t.hstore :comments, array: true
       t.integer :likes
       t.integer :dislikes
+
+	  t.timestamps
     end
 
 	add_index :products, :user_id

@@ -6,6 +6,8 @@ class CreateTransactions < ActiveRecord::Migration
       t.integer :product_id
       t.string :meetup_place
       t.hstore :chat, array: true
+
+	  t.timestamps
     end
 
 	add_index :transactions, :buyer_id
