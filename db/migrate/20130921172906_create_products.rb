@@ -9,7 +9,6 @@ class CreateProducts < ActiveRecord::Migration
       t.text :description
       t.decimal :price
       t.boolean :sold_out, default: false
-      t.string :photos_urls, array: true
       t.hstore :comments, array: true
       t.integer :likes
       t.integer :dislikes
@@ -19,6 +18,7 @@ class CreateProducts < ActiveRecord::Migration
 
 	add_index :products, :user_id
 	add_index :products, :category_id
+	add_index :products, :name
 	add_index :products, :price
 	add_index :products, :sold_out
 	add_index :products, :likes

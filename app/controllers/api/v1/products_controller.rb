@@ -32,6 +32,9 @@ class Api::V1::ProductsController < Api::BaseController
 private
 
 	def product_params
-		params.permit(:user_id, :name, :category_id, :description, :price, :sold_out)
+		parameters = params.permit(:user_id, :name, :category_id, :description, :price, :sold_out)
+		parameters[:images] = params.permit(:images).map { |image| Image.create(:content => image) } if params[:images].present?
+		
+		return parameters
 	end
 end

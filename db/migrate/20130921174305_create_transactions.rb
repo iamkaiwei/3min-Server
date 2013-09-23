@@ -13,6 +13,5 @@ class CreateTransactions < ActiveRecord::Migration
 	add_index :transactions, :buyer_id
 	add_index :transactions, :seller_id
 	add_index :transactions, :product_id
-	add_index :transactions, :meetup_place
   end
 end

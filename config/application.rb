@@ -22,5 +22,17 @@ module ThreeminsServer
 
 		# Default pagination size
 		WillPaginate.per_page = 10
+
+		# Paperclip settings for Amazon S3 storage
+		config.paperclip_defaults = {
+			storage: :s3,
+			s3_credentials: {
+				bucket: ENV["AMAZON_S3_BUCKET"],
+				access_key_id: ENV["AWS_ACCESS_KEY_ID"],
+				secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"]
+			},
+			url: ":amazon_s3_url",
+			path: ":class/:attachment/:style/:basename_:id.:extension"
+		}
 	end
 end

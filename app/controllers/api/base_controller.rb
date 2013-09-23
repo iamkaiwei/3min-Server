@@ -25,9 +25,9 @@ class Api::BaseController < ApplicationController
 protected
 
 	def authenticate_user_with_token!
-		return unless params[:fb_id].present?
+		return unless params[:facebook_id].present?
 		
-		user = User.find_by_facebook_id(params[:fb_id])
+		user = User.find_by_facebook_id(params[:facebook_id])
 
 		return unless user.present?
 
