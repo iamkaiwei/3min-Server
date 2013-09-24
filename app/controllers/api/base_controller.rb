@@ -13,7 +13,11 @@ class Api::BaseController < ApplicationController
 	def index
 		klass = get_variable_name(params).classify.constantize
 
-		respond_with klass.paginate(:per_page => params[:per_page], :page => params[:page])
+		if params[:per_page].present? or params[:page].present?
+			respond_with klass.paginate(:per_page => params[:per_page], :page => params[:page])
+		else
+			respond_with klass.all
+		end
 	end
 
 	def show

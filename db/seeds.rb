@@ -22,7 +22,6 @@ Category.pluck(:id).each do |category_id|
 				   :likes => Random.rand(1000), :dislikes => Random.rand(1000))
 
 	image_file_names.each do |file_name|
-		puts "file_name: #{file_name}"
 		product.images.create(:content => File.new("#{image_location}/#{file_name}"))
 	end
 end
