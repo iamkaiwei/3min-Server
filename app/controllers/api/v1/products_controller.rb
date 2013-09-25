@@ -13,7 +13,7 @@ class Api::V1::ProductsController < Api::BaseController
 		@product = Product.new(product_params)
 
 		if @product.save
-			render_success(:product => Rabl::Renderer.json(@product, "api/v1/products/show", :view_path => "app/views"))
+			render_success(:product => render_json_rabl(@product, :show))
 		else
 			render_failure(:details => @product.errors.full_messages.join("\n"))
 		end
@@ -21,7 +21,7 @@ class Api::V1::ProductsController < Api::BaseController
 
 	def update
 		if @product.update_attributes(product_params)
-			render_success(:product => Rabl::Renderer.json(@product, "api/v1/products/show"))
+			render_success(:product => render_json_rabl(@product, :show))
 		else
 			render_failure(:details => @product.errors.full_messages.join("\n"))
 		end

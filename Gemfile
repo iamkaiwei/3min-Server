@@ -21,6 +21,7 @@ gem 'devise'
 # API gems
 gem 'rabl'
 gem 'oj'
+gem 'rest-client'
 
 # Output arrangement gems
 gem 'will_paginate'
