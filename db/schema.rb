@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130923135653) do
+ActiveRecord::Schema.define(version: 20130927133245) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -36,6 +36,45 @@ ActiveRecord::Schema.define(version: 20130923135653) do
   end
 
   add_index "images", ["attachable_id", "attachable_type"], name: "index_images_on_attachable_id_and_attachable_type", using: :btree
+
+  create_table "oauth_access_grants", force: true do |t|
+    t.integer  "resource_owner_id",              null: false
+    t.integer  "application_id",                 null: false
+    t.string   "token",                          null: false
+    t.integer  "expires_in",                     null: false
+    t.string   "redirect_uri",      limit: 2048, null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "revoked_at"
+    t.string   "scopes"
+  end
+
+  add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
+
+  create_table "oauth_access_tokens", force: true do |t|
+    t.integer  "resource_owner_id"
+    t.integer  "application_id",    null: false
+    t.string   "token",             null: false
+    t.string   "refresh_token"
+    t.integer  "expires_in"
+    t.datetime "revoked_at"
+    t.datetime "created_at",        null: false
+    t.string   "scopes"
+  end
+
+  add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
+  add_index "oauth_access_tokens", ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
+  add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
+
+  create_table "oauth_applications", force: true do |t|
+    t.string   "name",                      null: false
+    t.string   "uid",                       null: false
+    t.string   "secret",                    null: false
+    t.string   "redirect_uri", limit: 2048, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
   create_table "products", force: true do |t|
     t.integer  "user_id"
@@ -74,8 +113,9 @@ ActiveRecord::Schema.define(version: 20130923135653) do
   add_index "transactions", ["seller_id"], name: "index_transactions_on_seller_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",                default: "", null: false
-    t.integer  "sign_in_count",        default: 0,  null: false
+    t.string   "email",              default: "", null: false
+    t.string   "encrypted_password", default: "", null: false
+    t.integer  "sign_in_count",      default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -91,15 +131,15 @@ ActiveRecord::Schema.define(version: 20130923135653) do
     t.string   "gender"
     t.date     "birthday"
     t.string   "udid"
-    t.string   "authentication_token"
+    t.string   "role"
   end
 
-  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
   add_index "users", ["birthday"], name: "index_users_on_birthday", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["facebook_id"], name: "index_users_on_facebook_id", using: :btree
   add_index "users", ["full_name"], name: "index_users_on_full_name", using: :btree
   add_index "users", ["gender"], name: "index_users_on_gender", using: :btree
+  add_index "users", ["role"], name: "index_users_on_role", using: :btree
   add_index "users", ["udid"], name: "index_users_on_udid", using: :btree
   add_index "users", ["username"], name: "index_users_on_username", using: :btree
 

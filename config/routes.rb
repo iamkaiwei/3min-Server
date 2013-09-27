@@ -1,4 +1,5 @@
 ThreeminsServer::Application.routes.draw do
+  use_doorkeeper
 	devise_for :users
 
 	root :to => "home#index"
@@ -9,8 +10,6 @@ ThreeminsServer::Application.routes.draw do
 				collection do
 					get :existence
 					get :facebook
-					post :login
-					post :logout
 				end
 			end
 

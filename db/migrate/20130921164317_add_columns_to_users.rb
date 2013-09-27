@@ -9,6 +9,7 @@ class AddColumnsToUsers < ActiveRecord::Migration
 	add_column :users, :gender, :string
 	add_column :users, :birthday, :date
     add_column :users, :udid, :string, :unique => true
+	add_column :users, :role, :string
 
 	add_index :users, :facebook_id
 	add_index :users, :username
@@ -16,5 +17,6 @@ class AddColumnsToUsers < ActiveRecord::Migration
 	add_index :users, :gender
 	add_index :users, :birthday
 	add_index :users, :udid
+	add_index :users, :role
   end
 end

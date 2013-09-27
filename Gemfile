@@ -17,6 +17,7 @@ gem 'jbuilder'
 # Security gems
 gem 'bcrypt-ruby'
 gem 'devise'
+gem 'doorkeeper'
 
 # API gems
 gem 'rabl'
@@ -31,6 +32,9 @@ gem 'paperclip'
 
 # Amazon AWS gems
 gem 'aws-sdk'
+
+# Server gems
+gem 'puma'
 
 # Documentation gems
 group :doc do

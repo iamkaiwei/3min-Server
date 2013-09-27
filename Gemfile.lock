@@ -35,7 +35,7 @@ GEM
     builder (3.1.4)
     climate_control (0.0.3)
       activesupport (>= 3.0)
-    cocaine (0.5.1)
+    cocaine (0.5.2)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.0.9)
     coffee-rails (4.0.0)
@@ -51,6 +51,9 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    doorkeeper (0.7.2)
+      jquery-rails (>= 2.0.2)
+      railties (>= 3.1)
     erubis (2.7.0)
     execjs (2.0.1)
     faker (1.2.0)
@@ -85,6 +88,8 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
+    puma (2.6.0)
+      rack (>= 1.1, < 2.0)
     rabl (0.8.6)
       activesupport (>= 2.3.14)
     rack (1.5.2)
@@ -152,6 +157,7 @@ DEPENDENCIES
   bcrypt-ruby
   coffee-rails
   devise
+  doorkeeper
   faker
   jbuilder
   jquery-rails
@@ -159,6 +165,7 @@ DEPENDENCIES
   paperclip
   pg
   pry
+  puma
   rabl
   rails (= 4.0.0)
   rest-client
