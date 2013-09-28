@@ -1,6 +1,7 @@
 class Api::BaseController < ApplicationController
 	doorkeeper_for :all
 
+	include Api::BaseHelper
 	include Api::RenderingHelper
 	include Api::ActiveRecordHelper
 
@@ -24,11 +25,5 @@ class Api::BaseController < ApplicationController
 		variable_name = get_variable_name(params)
 
 		respond_with instance_variable_get("@#{variable_name}".to_sym)
-	end
-
-protected
-
-	def render_json_rabl(variable, file)
-		JSON.parse(Rabl::Renderer.json(variable, "api/v1/#{variable.class.to_s.downcase.pluralize}/#{file}", :view_path => "app/views"))
 	end
 end

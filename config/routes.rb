@@ -11,6 +11,7 @@ ThreeminsServer::Application.routes.draw do
 		namespace :v1 do
 			resources :users, :only => [:index, :show, :update] do
 				collection do
+					get :current
 					get :existence
 					get :facebook
 				end

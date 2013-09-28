@@ -12,6 +12,8 @@ class Api::V1::UsersController < Api::BaseController
 	def update
 	end
 
+	def current; end
+
 	def existence
 	end
 

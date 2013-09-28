@@ -7,6 +7,10 @@ module Api::RenderingHelper
 		render_result("success", args)
 	end
 
+	def render_json_rabl(variable, file)
+		JSON.parse(Rabl::Renderer.json(variable, "api/v1/#{variable.class.to_s.downcase.pluralize}/#{file}", :view_path => "app/views"))
+	end
+
 private
 
 	def render_result(status, args)
