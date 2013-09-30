@@ -3,58 +3,60 @@ source "https://rubygems.org"
 ruby "2.0.0"
 gem "rails", :github => "rails/rails", :branch => "4-0-stable"
 
-# Database gems
-gem "pg"
+# Admin gems
+gem "activeadmin", :github => "gregbell/active_admin"
 
-# Front-end gems
-gem "sass-rails"
-gem "uglifier"
-gem "coffee-rails"
-gem "jquery-rails"
-gem "turbolinks"
-gem "jbuilder"
-
-# Security gems
-gem "bcrypt-ruby"
-gem "devise"
-gem "doorkeeper"
+# Amazon AWS gems
+gem "aws-sdk"
 
 # API gems
 gem "rabl"
 gem "oj"
 gem "rest-client"
 
-# Output arrangement gems
-gem "will_paginate"
-
 # Attachment gems
 gem "paperclip"
 
-# Amazon AWS gems
-gem "aws-sdk"
+# Database gems
+gem "pg"
+
+# Front-end gems
+gem "coffee-rails"
+gem "jbuilder"
+gem "jquery-rails"
+gem "sass-rails"
+gem "turbolinks"
+gem "uglifier"
+
+# Output arrangement gems
+gem "will_paginate"
+
+# Security gems
+gem "bcrypt-ruby"
+gem "devise"
+gem "doorkeeper"
 
 # Server gems
 gem "puma"
 
-# Admin gems
-gem "activeadmin", :github => "gregbell/active_admin"
-
-# Documentation gems
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem "sdoc", :require => false
-end
-
-# Development and test gems
-group :development, :test do
-	gem "pry"
-	gem "rspec-rails"
-	gem "factory_girl_rails"
-	gem "guard-rspec"
-end
-
-# Database gems
+# Database environment gems
 group :db do
 	gem "faker"
 end
 
+# Development and test environment gems
+group :development, :test do
+	gem "better_errors"
+	gem "binding_of_caller"
+	gem "factory_girl_rails"
+	gem "guard-livereload"
+	gem "guard-rspec"
+	gem "pry"
+	gem "rspec-rails"
+end
+
+# Documentation environment gems
+group :doc do
+  # bundle exec rake doc:rails generates the API under doc/api.
+  gem "sdoc", :require => false
+end

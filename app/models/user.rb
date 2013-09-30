@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 	validates :password, :length => { :within => Devise.password_length }, :allow_blank => true
 
 	%W(admin user).each do |type|
-		define_method "is_#{type}?".to_sym do
+		define_method "#{type}?".to_sym do
 			self.role == type
 		end
 	end

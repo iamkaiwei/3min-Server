@@ -1,4 +1,5 @@
 ThreeminsServer::Application.routes.draw do
+  ActiveAdmin.routes(self)
 	use_doorkeeper do
 		controllers :tokens => "doorkeeper/custom_tokens"
 	end
