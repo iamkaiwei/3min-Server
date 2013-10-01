@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
 	devise :database_authenticatable, :registerable
 
 	has_many :products, :dependent => :destroy
-	has_many :transactions
+	has_many :transactions, :foreign_key => "buyer_id"
+	has_many :transactions, :foreign_key => "seller_id"
 	has_one :image, :as => :attachable, :dependent => :destroy
 
 	validates :password, :length => { :within => Devise.password_length }, :allow_blank => true

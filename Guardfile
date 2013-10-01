@@ -2,6 +2,7 @@
 # More info at https://github.com/guard/guard#readme
 
 guard 'livereload' do
+  watch(%r{app/admin/.+\.rb$})
   watch(%r{app/controllers/.+\.rb$})
   watch(%r{app/models/.+\.rb$})
   watch(%r{app/views/.+\.(erb|haml|slim)$})
