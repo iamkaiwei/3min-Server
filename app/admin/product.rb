@@ -17,7 +17,9 @@ ActiveAdmin.register Product do
 			link_to(product.user.username, admin_user_path(product.user))
 		end
 		column :category do |product|
-			link_to(product.category.name, admin_category_path(product.category))
+			if @product
+				link_to(product.category.name, admin_category_path(product.category))
+			end
 		end
 
 		default_actions
