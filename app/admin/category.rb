@@ -16,4 +16,15 @@ ActiveAdmin.register Category do
 			end
 		end
 	end
+
+	form :html => { :multipart => true } do |f|
+    f.inputs do
+      f.input :name
+      f.input :description
+    	f.inputs	:for => [:image, (f.object.image || f.object.build_image)] do |j|
+		    j.input :content, :as => :file, :hint => j.template.image_tag(j.object.content.url) 
+		  end
+    end
+    f.buttons
+  end
 end

@@ -35,7 +35,9 @@ ActiveAdmin.register Product do
 				link_to(product.user.username, admin_user_path(product.user))
 			end
 			row :category do
-				link_to(product.category.name, admin_category_path(product.category))
+				if product.category.present?
+					link_to(product.category.name, admin_category_path(product.category))
+				end
 			end
 			row :images do
 				output = []

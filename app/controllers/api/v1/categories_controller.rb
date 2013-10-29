@@ -8,4 +8,6 @@ class Api::V1::CategoriesController < Api::BaseController
 						categories.all
 					end
 	end
+
+	def show; end
 end
