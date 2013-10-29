@@ -1,5 +1,4 @@
 class Image < ActiveRecord::Base
-	attr_accessible :content, :name, :description
 	belongs_to :attachable, :polymorphic => true
 
 	has_attached_file :content, :styles => { :small => "150x150>", :thumb => "100x100>", :square => "200x200#", :medium => "300x300>" }

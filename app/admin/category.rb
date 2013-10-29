@@ -27,4 +27,10 @@ ActiveAdmin.register Category do
     end
     f.buttons
   end
+
+  controller do
+    def permitted_params
+      params.permit(:category => [:name, :description, image_attributes: [:content, :name, :description]])
+    end
+  end
 end
