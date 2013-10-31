@@ -2,10 +2,14 @@ class Api::V1::ProductsController < Api::BaseController
 	def index
 		products = Product.includes(:images, :category, :user)
 
+		if params[:category_id].present? 
+			products = products.select{ |product| product.category_id == params[:category_id].to_i}
+		end
+
 		@products = if params[:per_page].present? or params[:page].present?
 						products.paginate(:page => params[:page], :per_page => params[:per_page])
 					else
-						products.all
+						products
 					end
 	end
 
