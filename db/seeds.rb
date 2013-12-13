@@ -27,13 +27,13 @@ else
 	admin = User.create(:email => Faker::Internet.email, :facebook_id => Faker::Lorem.characters(32),
 						:username => "admin", :password => "password", :full_name => Faker::Name.name, :role => "admin",
 						:gender => %W(male female).sample, :birthday => Date.today, :udid => Faker::Lorem.characters(32))
-	admin.image = Image.create(:content => File.new("#{image_location}/#{image_file_names.first}"))
+	# admin.image = Image.create(:content => File.new("#{image_location}/#{image_file_names.first}"))
 	puts "Created 'admin'!"
 	puts "Creating 'user1'"
 	user = User.create(:email => Faker::Internet.email, :facebook_id => Faker::Lorem.characters(32),
 					   :username => "user1", :password => "password", :full_name => Faker::Name.name, :role => "user",
 					   :gender => %W(male female).sample, :birthday => Date.today, :udid => Faker::Lorem.characters(32))
-	user.image = Image.create(:content => File.new("#{image_location}/#{image_file_names.last}"))
+	# user.image = Image.create(:content => File.new("#{image_location}/#{image_file_names.last}"))
 	puts "Created 'user1'!"
 	puts "========================"
 
@@ -44,7 +44,7 @@ else
 	(1..5).each do |i|
 		puts "Creating 'cat#{i}'"
 		category = Category.create(:name => "cat#{i}", :description => Faker::Lorem.paragraph(5))
-		category.image = Image.create(:content => File.new("#{image_location}/#{image_file_names.last}"))
+		# category.image = Image.create(:content => File.new("#{image_location}/#{image_file_names.last}"))
 		puts "Created 'cat#{i}'!"
 	end
 	puts "============================="
@@ -60,7 +60,7 @@ else
 								 :likes => Random.rand(1000), :dislikes => Random.rand(1000))
 
 		image_file_names.each do |file_name|
-			product.images.create(:content => File.new("#{image_location}/#{file_name}"))
+			# product.images.create(:content => File.new("#{image_location}/#{file_name}"))
 		end
 		puts "Created 'prod#{category_id}'!"
 	end

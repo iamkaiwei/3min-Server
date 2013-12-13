@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "2.0.0"
 # gem "rails", :github => "rails/rails", :branch => "4-0-stable"
-gem 'rails', '~> 4.0.0' 
+gem 'rails', '~> 4.0.0'
 
 gem 'debugger'
 
@@ -41,6 +41,7 @@ gem "doorkeeper"
 
 # Server gems
 gem "puma"
+gem "figaro"
 
 # Database environment gems
 group :db do

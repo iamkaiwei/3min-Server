@@ -1,14 +1,15 @@
-class Doorkeeper::CustomTokensController < Doorkeeper::TokensController
-	include Api::RenderingHelper
+module Doorkeeper
+	class CustomTokensController < Doorkeeper::TokensController
 
-	def create
-		super
-
-		response = JSON.parse(self.response_body.first)
-		access_token = Doorkeeper::AccessToken.find_by_token(response["access_token"])
-		user = User.find_by_id(access_token.resource_owner_id)
-		response["user"] = render_json_rabl(user, :show)
-
-		self.response_body = [response.to_json]
+		def create
+			response = strategy.authorize
+	    self.headers.merge! response.headers
+	    rsp_body = response.body
+	    rsp_body["user"] = User.find(response.token.resource_owner_id) if response.status == :ok
+	    self.response_body = rsp_body.to_json
+	    self.status        = response.status
+	  rescue Errors::DoorkeeperError => e
+	    handle_token_exception e
+		end
 	end
 end

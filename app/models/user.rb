@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
 		return nil if response.empty?
 
 		user = User.find_by_facebook_id(response[:id])
-
+		return user if user
 		user_parameters = {
 			:email => response[:email],
 			:username => response[:username],
@@ -34,20 +34,25 @@ class User < ActiveRecord::Base
 			:middle_name => response[:middle_name],
 			:last_name => response[:last_name],
 			:gender => response[:gender],
-			:birthday => response[:birthday]
+			:birthday => response[:birthday],
+			:facebook_avatar => response[:picture]["data"]["url"],
+			:facebook_id => response[:id],
+			:role => "user"
 		}
 		user_parameters[:udid] = args[:udid] if args[:udid].present?
+		user = User.create(user_parameters)
 
-		if user.blank?
-			user_parameters.merge!({
-				:facebook_id => response[:id],
-				:image => Image.create(:content => response[:picture])
-			})
+		# if user.blank?
+		# 	user_parameters.merge!({
+		# 		:facebook_id => response[:id],
+		# 		:image => Image.create(:content => response[:picture])
+		# 	})
 
-			user = User.create(user_parameters)
-		else
-			user.image.update_attributes(:content => response[:picture])
-		end
+		# 	user = User.create(user_parameters)
+		# else
+		# 	user.image.update_attributes(:content => response[:picture])
+		# end
+
 
 		return user
 	end

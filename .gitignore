@@ -18,3 +18,5 @@
 
 # Ignore all public assets
 /public/assets
+
+/config/application.yml
