@@ -4,7 +4,10 @@ attributes *Product.column_names
 child(:images) do |image|
 	attributes :id, :name, :description, :created_at, :updated_at
 
-	node(:url) { |img| img.content.url }
+  node(:thumb) { |img| img.content.url(:thumb) }
+  node(:square) { |img| img.content.url(:square) }
+  node(:medium) { |img| img.content.url(:medium) }
+  node(:origin) { |img| img.content.url }
 end
 
 child(:category) do

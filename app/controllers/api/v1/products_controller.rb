@@ -1,8 +1,8 @@
 class Api::V1::ProductsController < Api::BaseController
 	def index
-		products = Product.includes(:images, :category, :user)
+		products = Product.order(id: :desc).includes(:images, :category, :user)
 
-		if params[:category_id].present? 
+		if params[:category_id].present?
 			products = products.select{ |product| product.category_id == params[:category_id].to_i}
 		end
 
