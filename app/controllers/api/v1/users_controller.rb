@@ -20,6 +20,11 @@ class Api::V1::UsersController < Api::BaseController
 	def facebook
 	end
 
+	def device_token
+		rs = Urbanairship.register_device(params[:token], :alias => current_api_user.alias_name)
+		render json: rs
+	end
+
 private
 
 	def user_params

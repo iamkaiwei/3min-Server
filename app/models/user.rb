@@ -56,4 +56,8 @@ class User < ActiveRecord::Base
 
 		return user
 	end
+
+	def alias_name
+		"user-#{self.id}"
+	end
 end

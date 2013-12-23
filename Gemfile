@@ -43,6 +43,8 @@ gem "doorkeeper"
 gem "puma"
 gem "figaro"
 
+gem "urbanairship"
+
 # Database environment gems
 group :db do
 	gem "faker"

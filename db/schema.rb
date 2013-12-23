@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131213083856) do
+ActiveRecord::Schema.define(version: 20131222103515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,12 @@ ActiveRecord::Schema.define(version: 20131213083856) do
   end
 
   add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
+
+  create_table "chats", force: true do |t|
+    t.string   "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "images", force: true do |t|
     t.string   "content_file_name"
@@ -116,6 +122,15 @@ ActiveRecord::Schema.define(version: 20131213083856) do
   add_index "products", ["price"], name: "index_products_on_price", using: :btree
   add_index "products", ["sold_out"], name: "index_products_on_sold_out", using: :btree
   add_index "products", ["user_id"], name: "index_products_on_user_id", using: :btree
+
+  create_table "products_chats", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "chat_id"
+    t.integer  "from"
+    t.integer  "to"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "transactions", force: true do |t|
     t.integer  "buyer_id"

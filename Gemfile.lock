@@ -259,6 +259,8 @@ GEM
     uglifier (2.2.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    urbanairship (2.3.3)
+      json
     uuidtools (2.1.4)
     warden (1.2.3)
       rack (>= 1.0)
@@ -298,4 +300,5 @@ DEPENDENCIES
   sdoc
   turbolinks
   uglifier
+  urbanairship
   will_paginate
