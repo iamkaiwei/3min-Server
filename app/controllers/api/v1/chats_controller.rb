@@ -18,9 +18,12 @@ class Api::V1::ChatsController < Api::BaseController
   end
 
   def index
-    return render_failure(details: "please provide params [to](recipient id)") if params[:to].blank?
     p = Product.find_by(id: params[:product_id])
     return render_failure(details: "invalid product") unless p
-    @chats = p.products_chats.includes(:chat).where('"products_chats"."from" = ? OR "products_chats"."from" = ?', current_api_user.id, params[:to].to_i).where('"products_chats"."to" = ? OR "products_chats"."to" = ?', current_api_user.id, params[:to].to_i)
+    if params[:to].present?
+      @chats = p.products_chats.includes(:chat).where('"products_chats"."from" = ? OR "products_chats"."from" = ?', current_api_user.id, params[:to].to_i).where('"products_chats"."to" = ? OR "products_chats"."to" = ?', current_api_user.id, params[:to].to_i)
+    else
+      @chats = p.products_chats.includes(:chat).where(to: current_api_user.id)
+    end
   end
 end
