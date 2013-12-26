@@ -6,7 +6,7 @@ class Api::V1::ChatsController < Api::BaseController
     return render_failure(details: "invalid product") unless product
     recipient = User.find_by(id: params[:to])
     return render_failure(details: "invalid recipient") unless recipient
-    u = Urbanairship.push(:aliases => [recipient.alias_name], :aps => {:alert => "#{current_api_user.full_name} said: #{params[:message]}", :badge => 1, other: { product_id: product.id } })
+    u = Urbanairship.push(:aliases => [recipient.alias_name], :aps => { :alert => "#{current_api_user.full_name} said: #{params[:message]}", :badge => 1, other: { product_id: product.id } })
     if u.success?
       chat = Chat.create(message: params[:message])
       product.products_chats.create(chat_id: chat.id, from: current_api_user.id, to: recipient.id)
