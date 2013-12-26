@@ -22,8 +22,10 @@ class Api::V1::ChatsController < Api::BaseController
     return render_failure(details: "invalid product") unless p
     if params[:to].present?
       @chats = p.products_chats.includes(:chat).where('"products_chats"."from" = ? OR "products_chats"."from" = ?', current_api_user.id, params[:to].to_i).where('"products_chats"."to" = ? OR "products_chats"."to" = ?', current_api_user.id, params[:to].to_i)
+      @sender = false
     else
-      @chats = p.products_chats.includes(:chat).where(to: current_api_user.id)
+      @chats = p.products_chats.includes(:chat, :sender).where(to: current_api_user.id)
+      @sender = true
     end
   end
 end
