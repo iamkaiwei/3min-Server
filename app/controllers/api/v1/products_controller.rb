@@ -16,7 +16,7 @@ class Api::V1::ProductsController < Api::BaseController
 	def update
 		return render_failure(details: "You are not owner of this product") unless @product.user_id == current_api_user.id
 		return render_failure(:details => @product.errors.full_messages.join("\n")) unless @product.update(product_params)
-		render_success(:product => render_json_rabl(@product, :show)) :
+		render_success(:product => render_json_rabl(@product, :show))
 	end
 
 	def destroy
