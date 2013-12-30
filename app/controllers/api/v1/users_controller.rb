@@ -1,10 +1,7 @@
 class Api::V1::UsersController < Api::BaseController
 	def index
-		@users = if params[:per_page].present? or params[:page].present?
-						User.includes(:images).paginate(:page => params[:page], :per_page => params[:per_page])
-					else
-						User.all
-					end
+		@users = User.includes(:image)
+		@users = @users.paginate(:page => params[:page], :per_page => params[:per_page]) if params[:per_page].present? or params[:page].present?
 	end
 
 	def show; end

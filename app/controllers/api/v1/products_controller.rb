@@ -1,44 +1,27 @@
 class Api::V1::ProductsController < Api::BaseController
 	def index
-		products = Product.order(id: :desc).includes(:images, :category, :user)
-
-		if params[:category_id].present?
-			products = products.select{ |product| product.category_id == params[:category_id].to_i}
-		end
-
-		@products = if params[:per_page].present? or params[:page].present?
-						products.paginate(:page => params[:page], :per_page => params[:per_page])
-					else
-						products
-					end
+		@products = Product.order(id: :desc).includes(:images, :category, :user)
+		@products = @products.where(category_id: params[:category_id]) if params[:category_id].present?
+		@products = @products.paginate(:page => params[:page], :per_page => params[:per_page]) if params[:per_page].present? or params[:page].present?
 	end
 
 	def show; end
 
 	def create
-		@product = Product.new(product_params)
-
-		if @product.save
-			render_success(:product => render_json_rabl(@product, :show))
-		else
-			render_failure(:details => @product.errors.full_messages.join("\n"))
-		end
+		@product = current_api_user.products.new(product_params)
+		return render_failure(:details => @product.errors.full_messages.join("\n")) unless @product.save
+		render_success(:product => render_json_rabl(@product, :show))
 	end
 
 	def update
-		if @product.update_attributes(product_params)
-			render_success(:product => render_json_rabl(@product, :show))
-		else
-			render_failure(:details => @product.errors.full_messages.join("\n"))
-		end
+		return render_failure(details: "You are not owner of this product") unless @product.user_id == current_api_user.id
+		return render_failure(:details => @product.errors.full_messages.join("\n")) unless @product.update(product_params)
+		render_success(:product => render_json_rabl(@product, :show)) :
 	end
 
 	def destroy
-		if @product.destroy
-			render_success
-		else
-			render_failure
-		end
+		return render_failure(details: "You are not owner of this product") unless @product.user_id == current_api_user.id
+		@product.destroy ? render_success : render_failure
 	end
 
 	private

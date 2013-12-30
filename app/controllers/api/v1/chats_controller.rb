@@ -27,5 +27,7 @@ class Api::V1::ChatsController < Api::BaseController
       @chats = p.products_chats.includes(:chat, :sender).where(to: current_api_user.id)
       @sender = true
     end
+    @chats = @chats.where("created_at >= ?", Time.at(params[:from_time].to_i)) if params[:from_time]
+    @chats = @chats.paginate(:page => params[:page], :per_page => params[:per_page]) if params[:per_page].present? or params[:page].present?
   end
 end
