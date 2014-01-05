@@ -2,11 +2,11 @@ object @conversation
 
 attributes :id, :product_id
 
-child(:audience_one => :user_one) do
+child(:audience_one, if: lambda {|c| current_api_user.id != c.audience_one.id }) do
   attributes :id, :full_name, :facebook_avatar
 end
 
-child(:audience_two => :user_two) do
+child(:audience_two, if: lambda {|c| current_api_user.id != c.audience_two.id }) do
   attributes :id, :full_name, :facebook_avatar
 end
 
