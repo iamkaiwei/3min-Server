@@ -15,15 +15,14 @@ ThreeminsServer::Application.routes.draw do
 					get :current
 					get :existence
 					get :facebook
-					post :device_token
 				end
 			end
 
 			resources :categories, :only => [:index, :show]
 
-			resources :products, :except => [:new, :edit] do
-				resources :chats, only: [:create, :index]
-			end
+			resources :products, :except => [:new, :edit]
+
+			resources :conversations
 
 			resources :transactions, :except => [:new, :edit, :destroy] do
 				collection do
@@ -31,6 +30,8 @@ ThreeminsServer::Application.routes.draw do
 					get :sells
 				end
 			end
+
+			get 'activities', to: 'users#activities'
 		end
 	end
 end

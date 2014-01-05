@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131227082704) do
+ActiveRecord::Schema.define(version: 20140103144037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,8 +41,18 @@ ActiveRecord::Schema.define(version: 20131227082704) do
 
   add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
 
-  create_table "chats", force: true do |t|
-    t.text     "message"
+  create_table "conversation_replies", force: true do |t|
+    t.integer  "conversation_id", null: false
+    t.integer  "user_id",         null: false
+    t.text     "reply"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "conversations", force: true do |t|
+    t.integer  "user_one",   null: false
+    t.integer  "user_two",   null: false
+    t.integer  "product_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -123,23 +133,16 @@ ActiveRecord::Schema.define(version: 20131227082704) do
   add_index "products", ["sold_out"], name: "index_products_on_sold_out", using: :btree
   add_index "products", ["user_id"], name: "index_products_on_user_id", using: :btree
 
-  create_table "products_chats", force: true do |t|
-    t.integer  "product_id"
-    t.integer  "chat_id"
-    t.integer  "from"
-    t.integer  "to"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "transactions", force: true do |t|
     t.integer  "buyer_id"
     t.integer  "seller_id"
     t.integer  "product_id"
-    t.string   "meetup_place"
-    t.hstore   "chat",         array: true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "meetup_place_lon"
+    t.float    "meetup_place_lat"
+    t.float    "price_offer"
+    t.boolean  "completed"
   end
 
   add_index "transactions", ["buyer_id"], name: "index_transactions_on_buyer_id", using: :btree

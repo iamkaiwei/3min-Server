@@ -11,6 +11,10 @@ class Api::BaseController < ApplicationController
 
 	before_filter(:only => [:show, :update, :destroy]) { |controller| controller.fetch_object(params) }
 
+	rescue_from ActiveRecord::RecordNotFound do |exception|
+    render_failure(code: 404, message: exception.message)
+  end
+
 	def index
 		klass = get_variable_name(params).classify.constantize
 

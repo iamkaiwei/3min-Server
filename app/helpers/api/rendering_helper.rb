@@ -1,9 +1,11 @@
 module Api::RenderingHelper
 	def render_failure(args = {})
+		args[:code] ||= 400
 		render_result("failure", args)
 	end
 
 	def render_success(args = {})
+		args[:code] ||= 200
 		render_result("success", args)
 	end
 
@@ -14,9 +16,9 @@ module Api::RenderingHelper
 private
 
 	def render_result(status, args)
-		result = { :json => { :status => status, :timestamp => Time.now.to_i } }
+		result = { :json => { :status => status, :timestamp => Time.now.to_i }, status: args[:code] }
+		args.delete(:code)
 		result[:json].merge!(args)
-		result.merge!(args[:status_code]) if args[:status_code].present?
 
 		render result
 	end
