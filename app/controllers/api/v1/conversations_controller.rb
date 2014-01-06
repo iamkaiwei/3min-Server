@@ -15,6 +15,7 @@ class Api::V1::ConversationsController < Api::BaseController
   end
 
   def show
+    return render_failure(message: "It's not your conversation") if @conversation.audience_one.id != current_api_user.id && @conversation.audience_two.id != current_api_user.id
     @conversation_replies = @conversation.conversation_replies.order(created_at: :desc)
     if params[:larger]
       @conversation_replies = @conversation_replies.where("id > ?", params[:larger])

@@ -12,4 +12,5 @@ end
 
 child @conversation_replies => :replies do
   attributes :id, :conversation_id, :user_id, :reply
+  node(:timestamp) { |r| r.created_at.to_i }
 end

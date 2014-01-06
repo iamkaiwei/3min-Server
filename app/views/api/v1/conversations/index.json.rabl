@@ -10,6 +10,7 @@ child(:audience_two, if: lambda {|c| current_api_user.id != c.audience_two.id } 
 end
 
 node(:lastest_message) { |c| c.conversation_replies.last.reply }
+node(:lastest_update) { |c| c.updated_at.to_i }
 
 
 
