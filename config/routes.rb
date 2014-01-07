@@ -22,7 +22,9 @@ ThreeminsServer::Application.routes.draw do
 
 			resources :products, :except => [:new, :edit]
 
-			resources :conversations, only: [:create, :index, :show]
+			resources :conversations, only: [:create, :index, :show] do
+				resources :conversation_replies, only: :create
+			end
 
 			resources :transactions, :except => [:new, :edit, :destroy] do
 				collection do

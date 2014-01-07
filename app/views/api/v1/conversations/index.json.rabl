@@ -9,7 +9,7 @@ child(:audience_two, if: lambda {|c| current_api_user.id != c.audience_two.id } 
   attributes :id, :full_name, :facebook_avatar
 end
 
-node(:lastest_message) { |c| c.conversation_replies.last.reply }
+node(:lastest_message) { |c| c.conversation_replies.last.try(:reply) }
 node(:lastest_update) { |c| c.updated_at.to_i }
 
 
