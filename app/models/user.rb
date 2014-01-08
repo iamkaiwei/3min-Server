@@ -20,11 +20,12 @@ class User < ActiveRecord::Base
 	def self.find_or_create_by_facebook(args)
 		return nil if args[:fb_token].blank?
 
-		response = FacebookHelper.me(args[:fb_token], %W(email id username name first_name middle_name last_name gender birthday picture.type(large)))
+		response = FacebookHelper.me(args[:fb_token], %W(email id username name first_name middle_name last_name gender birthday))
 
 		return nil if response.empty?
 
 		user = User.find_or_initialize_by(facebook_id: response[:id])
+		return user if user.persisted?
 		user_parameters = {
 			:email => response[:email],
 			:username => response[:username],
@@ -34,7 +35,7 @@ class User < ActiveRecord::Base
 			:last_name => response[:last_name],
 			:gender => response[:gender],
 			:birthday => response[:birthday],
-			:facebook_avatar => response[:picture]["data"]["url"],
+			:facebook_avatar => "https://graph.facebook.com/#{response[:id]}/picture?type=large",
 			:role => "user"
 		}
 		user_parameters[:udid] = args[:udid] if args[:udid].present?
