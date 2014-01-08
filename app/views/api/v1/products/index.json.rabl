@@ -1,5 +1,8 @@
 collection @products
-attributes *Product.column_names
+attributes id, name, description, price, sold_out
+
+node(:create_time) { |p| p.created_at.to_i }
+node(:update_time) { |p| p.updated_at.to_i }
 
 child(:images) do |image|
 	attributes :id, :name, :description, :created_at, :updated_at
