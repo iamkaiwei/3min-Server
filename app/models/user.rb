@@ -24,8 +24,7 @@ class User < ActiveRecord::Base
 
 		return nil if response.empty?
 
-		user = User.find_by_facebook_id(response[:id])
-		return user if user
+		user = User.find_or_initialize_by(facebook_id: response[:id])
 		user_parameters = {
 			:email => response[:email],
 			:username => response[:username],
@@ -36,12 +35,12 @@ class User < ActiveRecord::Base
 			:gender => response[:gender],
 			:birthday => response[:birthday],
 			:facebook_avatar => response[:picture]["data"]["url"],
-			:facebook_id => response[:id],
 			:role => "user"
 		}
 		user_parameters[:udid] = args[:udid] if args[:udid].present?
-		user = User.create(user_parameters)
+		user.update(user_parameters)
 
+		return user
 		# if user.blank?
 		# 	user_parameters.merge!({
 		# 		:facebook_id => response[:id],
@@ -53,8 +52,6 @@ class User < ActiveRecord::Base
 		# 	user.image.update_attributes(:content => response[:picture])
 		# end
 
-
-		return user
 	end
 
 	def alias_name
