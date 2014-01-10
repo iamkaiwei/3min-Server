@@ -1,5 +1,5 @@
 class Conversation < ActiveRecord::Base
-  has_many :conversation_replies
+  has_many :conversation_replies, dependent: :destroy
   belongs_to :product
   belongs_to :audience_one, :class_name => "User", :foreign_key => "user_one"
   belongs_to :audience_two, :class_name => "User", :foreign_key => "user_two"

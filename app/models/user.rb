@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
 
 	validates :password, :length => { :within => Devise.password_length }, :allow_blank => true
 
+	before_destroy :destroy_conversations
+
 	%W(admin user).each do |type|
 		define_method "#{type}?".to_sym do
 			self.role == type
@@ -58,4 +60,10 @@ class User < ActiveRecord::Base
 	def alias_name
 		"user-#{self.id}"
 	end
+
+	private
+
+		def destroy_conversations
+			Conversation.of_you(self.id).destroy_all
+		end
 end
