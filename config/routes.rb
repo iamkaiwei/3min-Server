@@ -24,6 +24,7 @@ ThreeminsServer::Application.routes.draw do
 
 			resources :conversations, only: [:create, :index, :show] do
 				resources :conversation_replies, only: :create
+				put :offer, on: :member
 			end
 
 			resources :transactions, :except => [:new, :edit, :destroy] do
