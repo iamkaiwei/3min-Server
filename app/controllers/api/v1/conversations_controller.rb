@@ -4,7 +4,7 @@ class Api::V1::ConversationsController < Api::BaseController
     product = Product.find(params[:product_id])
     @recipient = User.find(params[:to])
     @conversation = Conversation.conversation_exist?(product.id, current_api_user.id, @recipient.id).first
-    return @conversation = product.conversations.create(user_one: current_api_user.id, user_two: @recipient.id ) unless @conversation
+    return @conversation = product.conversations.create(user_one: current_api_user.id, user_two: @recipient.id, offer: params[:offer].to_f) unless @conversation
     @conversation_replies = @conversation.conversation_replies.order(created_at: :desc).paginate(:page => 1)
   end
 
