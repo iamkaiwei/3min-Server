@@ -1,6 +1,6 @@
 object @conversation
 
-attributes :id, :product_id
+attributes :id, :product_id, :offer
 
 child(@recipient) { attributes :id, :full_name, :facebook_avatar }
 
