@@ -10,7 +10,6 @@ class Api::V1::ConversationsController < Api::BaseController
 
   def index
     @conversations = Conversation.of_you(current_api_user.id).order(updated_at: :desc).paginate(:page => params[:page]).includes(:audience_one, :audience_two)
-    @conversations = @conversations.reject { |c| c.conversation_replies.last.blank? }
   end
 
   def show

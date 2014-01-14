@@ -1,6 +1,6 @@
 object @conversation
 
-attributes :id, :product_id
+attributes :id, :product_id, :offer
 
 child(:audience_one, if: lambda {|c| current_api_user.id != c.audience_one.id }) do
   attributes :id, :full_name, :facebook_avatar
