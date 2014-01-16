@@ -63,6 +63,7 @@ class User < ActiveRecord::Base
 
 	def activities page
 		conversations = Conversation.of_you(self.id).order(updated_at: :desc).paginate(:page => page).includes(:audience_one, :audience_two)
+		return nil if conversations.blank?
 		replies = ConversationReply.latest_message(conversations.map(&:id)).pluck(:conversation_id, :reply)
 															 .inject({}) { |rs, var| rs[var.first] = var.last; rs }
 		conversations.each { |c| c.latest_message = replies[c.id] }
