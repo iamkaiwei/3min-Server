@@ -9,7 +9,7 @@ class Api::V1::ConversationsController < Api::BaseController
   end
 
   def index
-    @conversations = Conversation.of_you(current_api_user.id).order(updated_at: :desc).paginate(:page => params[:page]).includes(:audience_one, :audience_two)
+    @conversations = current_api_user.activities(params[:page])
   end
 
   def show
