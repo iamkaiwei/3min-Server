@@ -20,7 +20,10 @@ ThreeminsServer::Application.routes.draw do
 
 			resources :categories, :only => [:index, :show]
 
-			resources :products, :except => [:new, :edit]
+			resources :products, :except => [:new, :edit] do
+				get :me, on: :collection
+				get :offer, on: :collection
+			end
 
 			resources :conversations, only: [:create, :index, :show] do
 				resources :conversation_replies, only: :create

@@ -24,6 +24,17 @@ class Api::V1::ProductsController < Api::BaseController
 		@product.destroy ? render_success : render_failure
 	end
 
+	def me
+		@products = current_api_user.products
+		@products = @products.paginate(:page => params[:page], :per_page => 10) if params[:page].present?
+	end
+
+	def offer
+		@conversations = Conversation.of_you(current_api_user.id).where.not(offer: nil).to_a
+		product_ids = @conversations.map(&:product_id)
+		@products = Product.where(id: product_ids)
+	end
+
 	private
 
 	def product_params
