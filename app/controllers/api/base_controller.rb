@@ -9,7 +9,7 @@ class Api::BaseController < ApplicationController
 
 	respond_to :json
 
-	before_filter(:only => [:show, :update, :destroy]) { |controller| controller.fetch_object(params) }
+	before_filter(:only => [:show, :update]) { |controller| controller.fetch_object(params) }
 
 	rescue_from ActiveRecord::RecordNotFound do |exception|
     render_failure(code: 404, message: exception.message)

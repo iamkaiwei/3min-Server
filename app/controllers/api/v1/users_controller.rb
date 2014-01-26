@@ -17,10 +17,6 @@ class Api::V1::UsersController < Api::BaseController
 	def facebook
 	end
 
-	def activities
-
-	end
-
 private
 
 	def user_params

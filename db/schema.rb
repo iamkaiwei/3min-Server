@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140114033852) do
+ActiveRecord::Schema.define(version: 20140124050924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,13 @@ ActiveRecord::Schema.define(version: 20140114033852) do
 
   add_index "images", ["attachable_id", "attachable_type"], name: "index_images_on_attachable_id_and_attachable_type", using: :btree
 
+  create_table "likes", force: true do |t|
+    t.integer  "product_id", null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "oauth_access_grants", force: true do |t|
     t.integer  "resource_owner_id",              null: false
     t.integer  "application_id",                 null: false
@@ -113,13 +120,13 @@ ActiveRecord::Schema.define(version: 20140114033852) do
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
   create_table "products", force: true do |t|
-    t.integer  "user_id"
+    t.integer  "user_id",                     null: false
     t.string   "name"
     t.integer  "category_id"
     t.text     "description"
     t.decimal  "price"
     t.boolean  "sold_out",    default: false
-    t.hstore   "comments",                    array: true
+    t.hstore   "comments",                                 array: true
     t.integer  "likes"
     t.integer  "dislikes"
     t.datetime "created_at"

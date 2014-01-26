@@ -6,4 +6,6 @@ class Product < ActiveRecord::Base
   has_many :conversations
 
 	validates_associated :user, :category
+
+  validates :likes, numericality: true, allow_nil: true
 end

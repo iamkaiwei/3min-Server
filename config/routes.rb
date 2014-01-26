@@ -21,6 +21,7 @@ ThreeminsServer::Application.routes.draw do
 			resources :categories, :only => [:index, :show]
 
 			resources :products, :except => [:new, :edit] do
+				resource :likes, only: [:create, :destroy]
 				get :me, on: :collection
 				get :offer, on: :collection
 			end
@@ -37,7 +38,6 @@ ThreeminsServer::Application.routes.draw do
 				end
 			end
 
-			get 'activities', to: 'users#activities'
 		end
 	end
 end

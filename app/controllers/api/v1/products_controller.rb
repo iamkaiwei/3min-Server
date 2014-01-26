@@ -20,6 +20,7 @@ class Api::V1::ProductsController < Api::BaseController
 	end
 
 	def destroy
+		@product = Product.find(params[:id])
 		return render_failure(details: "You are not owner of this product") unless @product.user_id == current_api_user.id
 		@product.destroy ? render_success : render_failure
 	end
