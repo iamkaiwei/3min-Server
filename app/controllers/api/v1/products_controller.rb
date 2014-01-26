@@ -3,6 +3,7 @@ class Api::V1::ProductsController < Api::BaseController
 		@products = Product.order(id: :desc).includes(:images, :category, :user)
 		@products = @products.where(category_id: params[:category_id]) if params[:category_id].present?
 		@products = @products.paginate(:page => params[:page], :per_page => params[:per_page]) if params[:per_page].present? or params[:page].present?
+		@likes = Like.of_user(current_api_user.id).where(product_id: @products.map(&:id)).pluck(:product_id)
 	end
 
 	def show; end

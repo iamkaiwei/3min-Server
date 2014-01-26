@@ -3,6 +3,7 @@ attributes :id, :name, :description, :price, :sold_out, :likes
 
 node(:create_time) { |p| p.created_at.to_i }
 node(:update_time) { |p| p.updated_at.to_i }
+node(:liked) { |p| @likes.include?(p.id) }
 
 child(:images) do |image|
 	attributes :id, :name, :description, :created_at, :updated_at
