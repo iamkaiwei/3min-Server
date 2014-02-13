@@ -10,6 +10,6 @@ class Api::V1::LikesController < Api::BaseController
     product = Product.find(params[:product_id])
     like = Like.of_product(product.id).of_user(current_api_user.id).first
     return render_failure unless like
-    like.destroy ? render_success : render_failure
+    like.destroy_and_decrease_product_likes ? render_success : render_failure
   end
 end
