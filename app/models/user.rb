@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
 	has_many :products, :dependent => :destroy
 	has_many :transactions, :foreign_key => "buyer_id"
 	has_many :transactions, :foreign_key => "seller_id"
+	has_many :likes
+	has_many :liked_products, :through => :likes, :source => :product
 	has_one :image, :as => :attachable, :dependent => :destroy
 
 	validates :password, :length => { :within => Devise.password_length }, :allow_blank => true

@@ -24,6 +24,7 @@ ThreeminsServer::Application.routes.draw do
 				resource :likes, only: [:create, :destroy]
 				get :me, on: :collection
 				get :offer, on: :collection
+				get :liked, on: :collection
 			end
 
 			resources :conversations, only: [:create, :index, :show] do

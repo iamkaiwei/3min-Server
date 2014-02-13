@@ -37,6 +37,11 @@ class Api::V1::ProductsController < Api::BaseController
 		@products = Product.where(id: product_ids).paginate(:page => params[:page], :per_page => 10) if params[:page].present?
 	end
 
+	def liked
+		@products = current_api_user.liked_products
+		@products = @products.paginate(:page => params[:page], :per_page => 10) if params[:page].present?
+	end
+
 	private
 
 	def product_params
