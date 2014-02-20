@@ -27,7 +27,7 @@ class Api::V1::ProductsController < Api::BaseController
 	end
 
 	def me
-		@products = current_api_user.products
+		@products = current_api_user.products.order(created_at: :desc)
 		@products = @products.paginate(:page => params[:page], :per_page => 10) if params[:page].present?
 	end
 
