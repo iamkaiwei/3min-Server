@@ -22,9 +22,14 @@ ThreeminsServer::Application.routes.draw do
 
 			resources :products, :except => [:new, :edit] do
 				resource :likes, only: [:create, :destroy]
-				get :me, on: :collection
-				get :offer, on: :collection
-				get :liked, on: :collection
+
+				collection do
+					get :me
+					get :offer
+					get :liked
+					post :search
+					get :popular
+				end
 			end
 
 			resources :conversations, only: [:create, :index, :show] do

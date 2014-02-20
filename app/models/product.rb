@@ -1,6 +1,9 @@
 class Product < ActiveRecord::Base
+  acts_as_taggable
+
 	belongs_to :user
 	belongs_to :category
+  belongs_to :buyer, :class_name => "User"
 	has_many :transactions
 	has_many :images, :as => :attachable, :dependent => :destroy
   has_many :conversations

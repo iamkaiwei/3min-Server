@@ -42,10 +42,21 @@ class Api::V1::ProductsController < Api::BaseController
 		@products = @products.paginate(:page => params[:page], :per_page => 10) if params[:page].present?
 	end
 
+	def search
+		return render_failure(details: "Please provide tags") if params[:tags].blank?
+		tags = params[:tags].split(",").collect(&:strip)
+		@products = Product.tagged_with(tags, :any => true)
+		@products = @products.paginate(:page => params[:page], :per_page => 10) if params[:page].present?
+	end
+
+	def popular
+
+	end
+
 	private
 
 	def product_params
-		parameters = params.permit(:user_id, :name, :category_id, :description, :price, :sold_out)
+		parameters = params.permit(:user_id, :name, :category_id, :description, :price, :sold_out, :buyer_id, :tag_list)
 		parameters[:images] = params[:images].map { |image| Image.create(:content => image) } if params[:images].present?
 
 		return parameters

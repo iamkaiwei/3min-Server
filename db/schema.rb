@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140213075438) do
+ActiveRecord::Schema.define(version: 20140220181611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 20140213075438) do
     t.integer  "dislikes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "buyer_id"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
@@ -140,6 +141,24 @@ ActiveRecord::Schema.define(version: 20140213075438) do
   add_index "products", ["price"], name: "index_products_on_price", using: :btree
   add_index "products", ["sold_out"], name: "index_products_on_sold_out", using: :btree
   add_index "products", ["user_id"], name: "index_products_on_user_id", using: :btree
+
+  create_table "taggings", force: true do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       limit: 128
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+
+  create_table "tags", force: true do |t|
+    t.string "name"
+  end
+
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "transactions", force: true do |t|
     t.integer  "buyer_id"

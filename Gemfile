@@ -44,6 +44,7 @@ gem "puma"
 gem "figaro"
 
 gem "urbanairship"
+gem 'acts-as-taggable-on'
 
 # Database environment gems
 group :db do
