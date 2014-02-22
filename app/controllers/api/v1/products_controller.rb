@@ -47,16 +47,19 @@ class Api::V1::ProductsController < Api::BaseController
 		tags = params[:tags].split(",").collect(&:strip)
 		@products = Product.tagged_with(tags, :any => true)
 		@products = @products.paginate(:page => params[:page], :per_page => 10) if params[:page].present?
+		@likes = Like.of_user(current_api_user.id).where(product_id: @products.map(&:id)).pluck(:product_id)
 	end
 
 	def popular
-
+		@products = Product.order(likes: :desc)
+		@products = @products.paginate(:page => params[:page], :per_page => 10) if params[:page].present?
+		@likes = Like.of_user(current_api_user.id).where(product_id: @products.map(&:id)).pluck(:product_id)
 	end
 
 	private
 
 	def product_params
-		parameters = params.permit(:user_id, :name, :category_id, :description, :price, :sold_out, :buyer_id, :tag_list)
+		parameters = params.permit(:user_id, :name, :category_id, :description, :price, :sold_out, :buyer_id, :tag_list, :venue_id, :venue_name, :venue_long, :venue_lat)
 		parameters[:images] = params[:images].map { |image| Image.create(:content => image) } if params[:images].present?
 
 		return parameters

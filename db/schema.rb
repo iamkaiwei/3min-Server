@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140220181611) do
+ActiveRecord::Schema.define(version: 20140222180507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20140220181611) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "specific_type", limit: 20
   end
 
   add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
@@ -132,6 +133,10 @@ ActiveRecord::Schema.define(version: 20140220181611) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "buyer_id"
+    t.string   "venue_id"
+    t.string   "venue_name"
+    t.float    "venue_long"
+    t.float    "venue_lat"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree

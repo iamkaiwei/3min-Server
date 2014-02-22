@@ -1,5 +1,5 @@
 collection @products
-attributes :id, :name, :description, :price, :sold_out
+attributes :id, :name, :description, :price, :sold_out, :venue_id, :venue_name, :venue_long, :venue_lat
 
 node(:offer) { |p| @conversations.detect { |c| c.product_id == p.id }.try(:offer) }
 node(:conversation_id) { |p| @conversations.detect { |c| c.product_id == p.id }.try(:id) }

@@ -18,7 +18,12 @@ ThreeminsServer::Application.routes.draw do
 				end
 			end
 
-			resources :categories, :only => [:index, :show]
+			resources :categories, :only => [:index, :show] do
+				collection do
+					get :taggable
+					get :display
+				end
+			end
 
 			resources :products, :except => [:new, :edit] do
 				resource :likes, only: [:create, :destroy]
@@ -27,7 +32,7 @@ ThreeminsServer::Application.routes.draw do
 					get :me
 					get :offer
 					get :liked
-					post :search
+					get :search
 					get :popular
 				end
 			end
