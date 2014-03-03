@@ -56,6 +56,11 @@ class Api::V1::ProductsController < Api::BaseController
 		@likes = Like.of_user(current_api_user.id).where(product_id: @products.map(&:id)).pluck(:product_id)
 	end
 
+	def show_offer
+		@product = Product.includes(:user).find(params[:id])
+		@conversations = product.conversations.where.not(offer: nil).includes(:audience_one, :audience_two)
+	end
+
 	private
 
 	def product_params

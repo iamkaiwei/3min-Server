@@ -35,6 +35,8 @@ ThreeminsServer::Application.routes.draw do
 					get :search
 					get :popular
 				end
+
+				get :show_offer, on: :member
 			end
 
 			resources :conversations, only: [:create, :index, :show] do
