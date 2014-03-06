@@ -11,5 +11,19 @@ end
 
 node(:latest_update) { |c| c.updated_at.to_i }
 
+child(:product) do
+  attributes :id, :name, :description, :price, :sold_out, :likes, :venue_id, :venue_name, :venue_long, :venue_lat
+
+  child(:images) do |image|
+    attributes :id, :name, :description
+
+    node(:thumb) { |img| img.content.url(:thumb) }
+    node(:square) { |img| img.content.url(:square) }
+    node(:medium) { |img| img.content.url(:medium) }
+    node(:origin) { |img| img.content.url }
+  end
+end
+
+
 
 
