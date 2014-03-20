@@ -11,4 +11,8 @@ class Conversation < ActiveRecord::Base
   def latest_message
     @latest_message || "Offered #{self.offer}"
   end
+
+  def channel_name
+    "private-channel-#{audience_one.id}-#{audience_two.id}"
+  end
 end

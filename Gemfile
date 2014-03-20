@@ -46,6 +46,8 @@ gem "figaro"
 gem "urbanairship"
 gem 'acts-as-taggable-on'
 
+gem 'pusher'
+
 # Database environment gems
 group :db do
 	gem "faker"
