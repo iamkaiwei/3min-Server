@@ -7,4 +7,8 @@ class Api::V1::ConversationRepliesController < Api::BaseController
     conversation.conversation_replies.create(user_id: current_api_user.id, reply: params[:message])
     render_success(u)
   end
+
+  def bulk_create
+
+  end
 end

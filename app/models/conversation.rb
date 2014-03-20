@@ -13,6 +13,6 @@ class Conversation < ActiveRecord::Base
   end
 
   def channel_name
-    "private-channel-#{audience_one.id}-#{audience_two.id}"
+    "presence-channel-#{audience_one.id}-#{audience_two.id}"
   end
 end
