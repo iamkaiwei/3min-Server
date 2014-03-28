@@ -10,8 +10,8 @@ class Api::V1::ConversationRepliesController < Api::BaseController
 
   def bulk_create
     params[:messages].each do |message|
-      @conversation.conversation_replies.create(user_id: current_api_user.id, reply: message.reply,
-                                               created_at: Time.at(params[:created_at].to_i))
+      @conversation.conversation_replies.create(user_id: current_api_user.id, reply: message[:reply],
+                                               created_at: Time.at(message[:created_at].to_i))
     end
 
     head :ok
