@@ -41,8 +41,11 @@ ThreeminsServer::Application.routes.draw do
       end
 
       resources :conversations, only: [:create, :index, :show] do
-        resources :conversation_replies, only: :create
+        resources :conversation_replies, only: :create do
+          post :bulk_create, on: :collection
+        end
         put :offer, on: :member
+        get :exist, on: :collection
       end
 
       resources :transactions, :except => [:new, :edit, :destroy] do

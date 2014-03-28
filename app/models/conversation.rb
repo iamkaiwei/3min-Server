@@ -13,6 +13,11 @@ class Conversation < ActiveRecord::Base
   end
 
   def channel_name
-    "presence-channel-#{audience_one.id}-#{audience_two.id}"
+    "channel-#{product_id}-#{audience_one.id}-#{audience_two.id}"
+  end
+
+  def recipient audience_id
+    r_id = [audience_one.id, audience_two.id].reject! { |id| id == audience_id }
+    User.find(r_id.first) if r_id
   end
 end

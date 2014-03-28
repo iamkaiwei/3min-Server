@@ -4,8 +4,13 @@ class Api::V1::ConversationsController < Api::BaseController
     product = Product.find(params[:product_id])
     @recipient = User.find(params[:to])
     @conversation = Conversation.conversation_exist?(product.id, current_api_user.id, @recipient.id).first
-    return @conversation = product.conversations.create(user_one: current_api_user.id, user_two: @recipient.id) unless @conversation
-    @conversation_replies = @conversation.conversation_replies.order(created_at: :desc).paginate(:page => 1)
+    return @conversation = product.conversations.create(user_one: current_api_user.id, user_two: @recipient.id, offer: params[:offer]) unless @conversation
+    u = Urbanairship.push(:aliases => [@recipient.alias_name],
+                          :aps => { :alert => "#{current_api_user.full_name} offered: #{params[:offer]} for Product #{product.name}",
+                                    :badge => 1, sound: "default", other: { product_id: @conversation.product_id,
+                                                                            conversation_id: @conversation.id,
+                                                                            channel_name: @conversation.channel_name } })
+
   end
 
   def index
@@ -30,5 +35,12 @@ class Api::V1::ConversationsController < Api::BaseController
     return render_failure(message: "Please input valid offer") if offer <= 0
     return render_failure unless @conversation.update_attribute(:offer, offer)
     render_success
+  end
+
+  def exist
+    product = Product.find(params[:product_id])
+    @recipient = User.find(params[:to])
+    @conversation = Conversation.conversation_exist?(product.id, current_api_user.id, @recipient.id).first
+    return render json: {} unless @conversation
   end
 end
