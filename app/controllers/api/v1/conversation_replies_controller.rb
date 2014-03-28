@@ -9,12 +9,9 @@ class Api::V1::ConversationRepliesController < Api::BaseController
   end
 
   def bulk_create
-    params[:messages].each do |message|
-      @conversation.conversation_replies.create(user_id: current_api_user.id, reply: message[:reply],
-                                               created_at: Time.at(message[:created_at].to_i))
-    end
-
-    head :ok
+    ConversationReply.bulk_create(params[:messages], current_api_user.id, @conversation.id)
+    @conversation.touch
+    render_success
   end
 
   private
