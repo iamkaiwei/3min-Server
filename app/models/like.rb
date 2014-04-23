@@ -8,18 +8,24 @@ class Like < ActiveRecord::Base
   scope :of_product, ->(product_id){ where(product_id: product_id) }
   scope :of_user, ->(user_id){ where(user_id: user_id) }
 
+  after_save :create_activities
+
   def self.create_and_increase_product_likes args
     transaction do
       like = Like.create(args)
-      return nil unless like.persisted?
+      return false unless like.persisted?
       like.product.update(likes: like.product.likes.to_i + 1)
     end
   end
 
   def destroy_and_decrease_product_likes
-    product = self.product
-    transaction do
-      self.destroy ? product.update(likes: product.likes.to_i - 1) : false
-    end
+    return false unless destroy
+    product.activities.where(user_id: product.user_id, sender_id: user_id).delete_all
+    product.update(likes: product.likes.to_i - 1)
+  end
+
+  def create_activities
+    product.activities.create(content: "#{user.full_name} liked your product '#{product.name}'",
+                              user_id: product.user_id, sender_id: user_id)
   end
 end

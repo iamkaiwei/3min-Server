@@ -55,6 +55,7 @@ ThreeminsServer::Application.routes.draw do
         end
       end
 
+      resources :activities, only: :index
     end
   end
 end

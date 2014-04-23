@@ -7,6 +7,7 @@ class Product < ActiveRecord::Base
 	has_many :transactions
 	has_many :images, :as => :attachable, :dependent => :destroy
   has_many :conversations
+  has_many :activities, as: :subject
 
 	validates_associated :user, :category
 
