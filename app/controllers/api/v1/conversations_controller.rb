@@ -14,7 +14,7 @@ class Api::V1::ConversationsController < Api::BaseController
   end
 
   def index
-    @conversations = current_api_user.activities(params[:page])
+    @conversations = current_api_user.conversations(params[:page])
   end
 
   def show
