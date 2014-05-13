@@ -4,11 +4,6 @@ ruby "2.0.0"
 # gem "rails", :github => "rails/rails", :branch => "4-0-stable"
 gem 'rails', '~> 4.0.0'
 
-
-
-# Admin gems
-gem "activeadmin", :github => "gregbell/active_admin"
-
 # Amazon AWS gems
 gem "aws-sdk"
 
