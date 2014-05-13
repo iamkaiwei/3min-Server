@@ -5,7 +5,7 @@ class Api::V1::PushersController < Api::BaseController
       user_info: {
         name: current_api_user.full_name,
         email: current_api_user.email,
-        facebook_avatar: current_api_user.facebook_avatar
+        avatar: current_api_user.avatar
       }
     })
     render :json => response

@@ -23,10 +23,7 @@ class User < ActiveRecord::Base
 	end
 
 	def self.find_or_create_by_facebook(args)
-		return nil if args[:fb_token].blank?
-
 		response = FacebookHelper.me(args[:fb_token], %W(email id username name first_name middle_name last_name gender birthday))
-
 		return nil if response.empty?
 
 		user = User.find_or_initialize_by(facebook_id: response[:id])
@@ -40,24 +37,35 @@ class User < ActiveRecord::Base
 			:last_name => response[:last_name],
 			:gender => response[:gender],
 			:birthday => response[:birthday],
-			:facebook_avatar => "https://graph.facebook.com/#{response[:id]}/picture?type=large",
+			:avatar => "https://graph.facebook.com/#{response[:id]}/picture?type=large",
 			:role => "user"
 		}
 		user_parameters[:udid] = args[:udid] if args[:udid].present?
 		user.update(user_parameters)
 
 		return user
-		# if user.blank?
-		# 	user_parameters.merge!({
-		# 		:facebook_id => response[:id],
-		# 		:image => Image.create(:content => response[:picture])
-		# 	})
+	end
 
-		# 	user = User.create(user_parameters)
-		# else
-		# 	user.image.update_attributes(:content => response[:picture])
-		# end
+	def self.find_or_create_by_google args
+		response = Google::Api.new(args[:gg_token]).user_info
+		return nil unless response.success?
 
+		user = User.find_or_initialize_by(google_id: response[:id])
+		return user if user.persisted?
+		user_parameters = {
+			:email => response[:emails].first[:value],
+			:username => response[:username],
+			:full_name => response[:displayName],
+			:first_name => response[:name][:familyName],
+			:last_name => response[:name][:givenName],
+			:gender => response[:gender],
+			:avatar => response[:image][:url],
+			:role => "user"
+		}
+		user_parameters[:udid] = args[:udid] if args[:udid].present?
+		user.update(user_parameters)
+
+		return user
 	end
 
 	def alias_name
@@ -70,6 +78,10 @@ class User < ActiveRecord::Base
 		replies = ConversationReply.latest_message(conversations.map(&:id)).pluck(:conversation_id, :reply)
 															 .inject({}) { |rs, var| rs[var.first] = var.last; rs }
 		conversations.each { |c| c.latest_message = replies[c.id] }
+	end
+
+	def facebook_avatar
+		avatar
 	end
 
 	private

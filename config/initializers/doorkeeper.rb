@@ -10,7 +10,8 @@ Doorkeeper.configure do
 	end
 
 	resource_owner_from_credentials do |routes|
-		User.find_or_create_by_facebook(params)
+		next User.find_or_create_by_facebook(params) if params[:fb_token].present?
+		User.find_or_create_by_google(params) if params[:gg_token].present?
 	end
 
 	# If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
