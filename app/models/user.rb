@@ -26,10 +26,9 @@ class User < ActiveRecord::Base
 		response = FacebookHelper.me(args[:fb_token], %W(email id username name first_name middle_name last_name gender birthday))
 		return nil if response.empty?
 
-		user = User.find_or_initialize_by(facebook_id: response[:id])
-		return user if user.persisted?
+		user = User.find_or_initialize_by(email: response[:email])
 		user_parameters = {
-			:email => response[:email],
+			:facebook_id => response[:id],
 			:username => response[:username],
 			:full_name => response[:name],
 			:first_name => response[:first_name],
@@ -50,10 +49,9 @@ class User < ActiveRecord::Base
 		response = Google::Api.new(args[:gg_token]).user_info
 		return nil unless response.success?
 
-		user = User.find_or_initialize_by(google_id: response[:id])
-		return user if user.persisted?
+		user = User.find_or_initialize_by(email: response[:emails].first[:value])
 		user_parameters = {
-			:email => response[:emails].first[:value],
+			:google_id => response[:id],
 			:username => response[:username],
 			:full_name => response[:displayName],
 			:first_name => response[:name][:familyName],
