@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
 	has_many :activities
 
 	validates :password, :length => { :within => Devise.password_length }, :allow_blank => true
+	validates :email, presence: true
 
 	before_destroy :destroy_conversations
 
