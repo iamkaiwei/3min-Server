@@ -22,7 +22,7 @@ ActiveAdmin.register Category do
       f.input :name
       f.input :description
       f.inputs  :for => [:image, (f.object.image || f.object.build_image)] do |j|
-        j.input :content, :as => :file, :hint => (j.object.persisted? ? j.template.image_tag(j.object.picture.url(:thumb)) : nil)
+        j.input :content, :as => :file, :hint => (j.object.persisted? ? j.template.image_tag(j.object.content.url(:thumb)) : nil)
       end
     end
     f.actions
