@@ -1,9 +1,14 @@
 ThreeminsServer::Application.routes.draw do
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
+  ActiveAdmin.routes(self)
+
   use_doorkeeper do
     controllers :tokens => "doorkeeper/custom_tokens"
   end
 
-  devise_for :users
+  # devise_for :users
 
   root :to => "home#index"
 

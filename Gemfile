@@ -22,9 +22,10 @@ gem "pg"
 gem "coffee-rails"
 gem "jbuilder"
 gem "jquery-rails"
-gem "sass-rails"
+gem 'sass-rails', '4.0.2'
 gem "turbolinks"
 gem "uglifier"
+gem 'bootstrap-sass'
 
 # Output arrangement gems
 gem "will_paginate"
@@ -42,6 +43,8 @@ gem "urbanairship"
 gem 'acts-as-taggable-on'
 
 gem 'pusher'
+
+gem 'activeadmin', github: 'gregbell/active_admin'
 
 # Database environment gems
 group :db do
