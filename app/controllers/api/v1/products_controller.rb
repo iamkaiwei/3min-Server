@@ -3,7 +3,7 @@ class Api::V1::ProductsController < Api::BaseController
 		@products = Product.order(id: :desc).includes(:images, :category, :user)
 		@products = @products.where(category_id: params[:category_id]) if params[:category_id].present?
 		@products = @products.paginate(:page => params[:page], :per_page => params[:per_page]) if params[:per_page].present? or params[:page].present?
-		@likes = Like.of_user(current_api_user.id).where(product_id: @products.map(&:id)).pluck(:product_id)
+		load_liked_product_ids
 	end
 
 	def show; end
@@ -29,6 +29,7 @@ class Api::V1::ProductsController < Api::BaseController
 	def me
 		@products = current_api_user.products.order(created_at: :desc)
 		@products = @products.paginate(:page => params[:page], :per_page => 10) if params[:page].present?
+		load_liked_product_ids
 	end
 
 	def offer
@@ -47,13 +48,13 @@ class Api::V1::ProductsController < Api::BaseController
 		tags = params[:tags].split(",").collect(&:strip)
 		@products = Product.tagged_with(tags, :any => true)
 		@products = @products.paginate(:page => params[:page], :per_page => 10) if params[:page].present?
-		@likes = Like.of_user(current_api_user.id).where(product_id: @products.map(&:id)).pluck(:product_id)
+		load_liked_product_ids
 	end
 
 	def popular
 		@products = Product.order(likes: :desc)
 		@products = @products.paginate(:page => params[:page], :per_page => 10) if params[:page].present?
-		@likes = Like.of_user(current_api_user.id).where(product_id: @products.map(&:id)).pluck(:product_id)
+		load_liked_product_ids
 	end
 
 	def show_offer
@@ -62,6 +63,10 @@ class Api::V1::ProductsController < Api::BaseController
 	end
 
 	private
+
+	def load_liked_product_ids
+		@likes = current_api_user.likes.where(product_id: @products.map(&:id)).pluck(:product_id)
+	end
 
 	def product_params
 		parameters = params.permit(:user_id, :name, :category_id, :description, :price, :sold_out, :buyer_id, :tag_list, :venue_id, :venue_name, :venue_long, :venue_lat)
