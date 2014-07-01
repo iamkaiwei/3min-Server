@@ -3,8 +3,10 @@ class Api::V1::LikesController < Api::BaseController
     product = Product.find(params[:product_id])
     rs = Like.create_and_increase_product_likes(user_id: current_api_user.id, product_id: product.id)
     return render_failure unless rs
-    u = Urbanairship.push(aliases: [product.user.alias_name], aps: { alert: "#{current_api_user.full_name} liked your product '#{product.name}'",
-                                                                     badge: 1, sound: "default", other: { product_id: product.id } })
+
+    message = "#{current_api_user.full_name} liked your product '#{product.name}'"
+    extra = { product_id: product.id }
+    Notifier.push(UrbanAirshipPayload.create(message, { alias: product.user.alias_name }, extra))
     render_success
   end
 

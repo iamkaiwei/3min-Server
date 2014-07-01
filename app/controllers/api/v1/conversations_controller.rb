@@ -5,11 +5,10 @@ class Api::V1::ConversationsController < Api::BaseController
     @recipient = User.find(params[:to])
     @conversation = Conversation.conversation_exist?(product.id, current_api_user.id, @recipient.id).first
     return @conversation = product.conversations.create(user_one: current_api_user.id, user_two: @recipient.id, offer: params[:offer]) unless @conversation
-    u = Urbanairship.push(:aliases => [@recipient.alias_name],
-                          :aps => { :alert => "#{current_api_user.full_name} offered: #{params[:offer]} for Product #{product.name}",
-                                    :badge => 1, sound: "default", other: { product_id: @conversation.product_id,
-                                                                            conversation_id: @conversation.id,
-                                                                            channel_name: @conversation.channel_name } })
+
+    message = "#{current_api_user.full_name} offered: #{params[:offer]} for Product #{product.name}"
+    extra = { product_id: @conversation.product_id, conversation_id: @conversation.id, channel_name: @conversation.channel_name }
+    Notifier.push(UrbanAirshipPayload.create(message, { alias: @recipient.alias_name }, extra))
 
   end
 
