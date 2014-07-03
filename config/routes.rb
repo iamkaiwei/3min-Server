@@ -21,6 +21,8 @@ ThreeminsServer::Application.routes.draw do
           get :existence
           get :facebook
         end
+
+        get :products, on: :member
       end
 
       resources :categories, :only => [:index, :show] do
