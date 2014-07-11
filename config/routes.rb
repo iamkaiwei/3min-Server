@@ -41,6 +41,7 @@ ThreeminsServer::Application.routes.draw do
           get :liked
           get :search
           get :popular
+          get :followed
         end
 
         get :show_offer, on: :member
@@ -62,6 +63,10 @@ ThreeminsServer::Application.routes.draw do
       end
 
       resources :activities, only: :index
+
+      resources :relationships, only: :create do
+        delete :unfollow, on: :collection
+      end
     end
   end
 end

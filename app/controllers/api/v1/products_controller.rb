@@ -62,6 +62,13 @@ class Api::V1::ProductsController < Api::BaseController
 		@conversations = @product.conversations.where.not(offer: nil).includes(:audience_one, :audience_two)
 	end
 
+	def followed
+		@products = Product.where(user_id: current_api_user.relationships.pluck(:followed_id)).order(updated_at: :desc)
+		@products = @products.where(category_id: params[:category_id]) if params[:category_id].present?
+		@products = @products.paginate(:page => params[:page], :per_page => params[:per_page]) if params[:per_page].present? or params[:page].present?
+		load_liked_product_ids
+	end
+
 	private
 
 	def load_liked_product_ids
