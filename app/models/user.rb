@@ -11,6 +11,12 @@ class User < ActiveRecord::Base
 	has_many :liked_products, :through => :likes, :source => :product
 	has_one :image, :as => :attachable, :dependent => :destroy
 	has_many :activities
+	has_many :relationships, foreign_key: "follower_id", dependent: :destroy
+	has_many :followed_users, through: :relationships, source: :followed
+
+	has_many :reverse_relationships, foreign_key: "followed_id", class_name: Relationship
+	has_many :followers, through: :reverse_relationships
+
 
 	validates :password, :length => { :within => Devise.password_length }, :allow_blank => true
 	validates :email, presence: true
