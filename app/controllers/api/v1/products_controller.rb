@@ -27,7 +27,7 @@ class Api::V1::ProductsController < Api::BaseController
 	end
 
 	def me
-		@products = current_api_user.products.order(created_at: :desc)
+		@products = current_api_user.products.order(created_at: :desc).includes(:images, :category, :user)
 		@products = @products.paginate(:page => params[:page], :per_page => 10) if params[:page].present?
 		load_liked_product_ids
 	end
@@ -63,7 +63,7 @@ class Api::V1::ProductsController < Api::BaseController
 	end
 
 	def followed
-		@products = Product.where(user_id: current_api_user.relationships.pluck(:followed_id)).order(updated_at: :desc)
+		@products = Product..where(user_id: current_api_user.relationships.pluck(:followed_id)).order(updated_at: :desc)
 		@products = @products.where(category_id: params[:category_id]) if params[:category_id].present?
 		@products = @products.paginate(:page => params[:page], :per_page => params[:per_page]) if params[:per_page].present? or params[:page].present?
 		load_liked_product_ids
