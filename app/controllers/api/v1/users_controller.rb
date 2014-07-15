@@ -26,6 +26,16 @@ class Api::V1::UsersController < Api::BaseController
 		load_liked_product_ids
 	end
 
+	def followers
+		@users = User.find(params[:id]).followers.paginate(:page => params[:page], :per_page => params[:per_page]).to_a
+		@followed_users = current_api_user.relationships.where(followed_id: @users.map(&:id)).pluck(:followed_id)
+	end
+
+	def followings
+		@users = User.find(params[:id]).followed_users.paginate(:page => params[:page], :per_page => params[:per_page]).to_a
+		@followed_users = current_api_user.relationships.where(followed_id: @users.map(&:id)).pluck(:followed_id)
+	end
+
 private
 	def load_liked_product_ids
 		@likes = current_api_user.likes.where(product_id: @products.map(&:id)).pluck(:product_id)

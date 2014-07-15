@@ -89,6 +89,10 @@ class User < ActiveRecord::Base
 		avatar
 	end
 
+	def followed? user_id
+		relationships.where(followed_id: user_id).any?
+	end
+
 	private
 
 		def destroy_conversations

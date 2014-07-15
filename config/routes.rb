@@ -22,7 +22,11 @@ ThreeminsServer::Application.routes.draw do
           get :facebook
         end
 
-        get :products, on: :member
+        member do
+          get :products
+          get :followers
+          get :followings
+        end
       end
 
       resources :categories, :only => [:index, :show] do
