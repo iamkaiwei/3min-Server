@@ -18,5 +18,5 @@ child(:category) do
 end
 
 child(:user => :owner) do
-  extends "api/v1/users/show"
+  extends "api/v1/users/index"
 end
