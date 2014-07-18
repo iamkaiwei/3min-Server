@@ -1,3 +1,3 @@
-Pusher.app_id = '68953'
-Pusher.key = 'ce3898cbc04d99f952cd'
-Pusher.secret = 'c52f5e0b7e0738f4a0fb'
+Pusher.app_id = ENV['PUSHER_APP_ID']
+Pusher.key = ENV['PUSHER_KEY']
+Pusher.secret = ENV['PUSHER_SECRET']
