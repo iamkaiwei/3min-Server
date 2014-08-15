@@ -1,5 +1,5 @@
 collection @activities
-attributes :id, :content, :subject_id, :subject_type
+attributes :id, :content, :subject_id, :subject_type, :display_image_url
 
 node(:update_time) { |a| a.updated_at.to_i }
 

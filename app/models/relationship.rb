@@ -11,7 +11,7 @@ class Relationship < ActiveRecord::Base
   after_save :create_activities
 
   def create_activities
-    message = follower.full_name + 'followed you !'
+    message = follower.full_name + ' followed you !'
     activities.create(content: message, user_id: followed_id, sender_id: follower_id)
   end
 end
