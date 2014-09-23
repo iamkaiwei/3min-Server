@@ -49,7 +49,11 @@ ThreeminsServer::Application.routes.draw do
         end
 
         get :show_offer, on: :member
+
+        resources :comments, only: [:index, :create]
       end
+
+      resources :comments, only: [:update, :destroy]
 
       resources :conversations, only: [:create, :index, :show] do
         resources :conversation_replies, only: :create do

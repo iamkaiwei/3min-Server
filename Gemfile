@@ -46,6 +46,8 @@ gem 'pusher'
 
 gem 'activeadmin', github: 'gregbell/active_admin'
 
+gem 'spring'
+
 # Database environment gems
 group :db do
 	gem "faker"
@@ -55,12 +57,19 @@ end
 group :development, :test do
 	gem "better_errors"
 	gem "binding_of_caller"
-	gem "factory_girl_rails"
-	gem "guard-livereload"
 	gem "guard-rspec"
 	gem "pry"
-	gem "rspec-rails"
+	gem "rspec-rails", '~> 2.14.2'
 	gem 'debugger'
+  gem 'spring-commands-rspec'
+	gem 'rspec_wiki', git: 'https://github.com/nlds90/rspec_wiki.git'
+end
+
+group :test do
+  gem 'factory_girl_rails', '~> 4.2.1'
+  gem 'database_cleaner', '~> 1.2.0'
+  gem 'ffaker', '~> 1.20.0'
+  gem 'shoulda-matchers', require: false
 end
 
 # Documentation environment gems

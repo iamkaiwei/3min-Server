@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 
 	has_many :reverse_relationships, foreign_key: "followed_id", class_name: Relationship
 	has_many :followers, through: :reverse_relationships
+	has_many :comments, dependent: :destroy
 
 
 	validates :password, :length => { :within => Devise.password_length }, :allow_blank => true
