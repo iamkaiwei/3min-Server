@@ -6,7 +6,9 @@ class Api::V1::ProductsController < Api::BaseController
 		load_liked_product_ids
 	end
 
-	def show; end
+	def show
+ 		@comments = @product.comments.latest_order.limit(3)
+  end
 
 	def create
 		@product = current_api_user.products.new(product_params)

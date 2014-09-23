@@ -20,3 +20,11 @@ end
 child(:user => :owner) do
   extends "api/v1/users/index"
 end
+
+child @comments do
+  attributes :id, :content
+
+  child(:user) do
+    attributes :id, :full_name, :avatar, :email, :username, :udid, :facebook_id, :facebook_avatar
+  end
+end
