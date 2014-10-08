@@ -8,10 +8,10 @@ class Relationship < ActiveRecord::Base
 
   has_many :activities, as: :subject
 
-  after_save :create_activities
+  after_create :create_activities
 
   def create_activities
     message = follower.full_name + ' followed you !'
-    activities.create(content: message, user_id: followed_id, sender_id: follower_id)
+    activities.create(content: message, user_id: followed_id, sender_id: follower_id, category: Activity::TYPE[:follow])
   end
 end

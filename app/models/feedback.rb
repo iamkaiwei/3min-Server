@@ -12,6 +12,7 @@ class Feedback < ActiveRecord::Base
 
   after_create :increase_counter
   after_destroy :descrease_counter
+  after_create :create_activities
 
   private
 
@@ -21,5 +22,10 @@ class Feedback < ActiveRecord::Base
 
   def descrease_counter
     User.increment_counter("#{status}_count", user_id)
+  end
+
+  def create_activities
+    content = "#{sender.full_name} gave you a feedback"
+    product.activities.create(user_id: user_id, sender_id: sender_id, content: content, category: Activity::TYPE[:feedback])
   end
 end

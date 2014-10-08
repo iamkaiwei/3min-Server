@@ -26,6 +26,6 @@ class ConversationReply < ActiveRecord::Base
     content = user.full_name.to_s + " said: " + reply.truncate(50, separator: ' ')
     activity = Activity.where(subject_id: conversation.id, user_id: receiver_id).first
     return activity.update(content: content) if activity
-    conversation.activities.create(user_id: receiver_id, content: content, sender_id: user_id)
+    conversation.activities.create(user_id: receiver_id, content: content, sender_id: user_id, category: Activity::TYPE[:chat])
   end
 end

@@ -1,14 +1,5 @@
 class UrbanAirshipPayload
 
-  NOTIFICATION_TYPE = {
-    chat: 1,
-    offer: 2,
-    like: 3,
-    follow: 4,
-    comment: 5,
-    feedback: 6
-  }
-
   def self.create message, audience = 'all', extra = {}
     extra = normalize_extra extra
     {
@@ -52,7 +43,7 @@ class UrbanAirshipPayload
   end
 
   def self.normalize_extra extra
-    extra[:notification_type] = NOTIFICATION_TYPE[extra[:notification_type]]
+    extra[:notification_type] = Activity::TYPE[extra[:notification_type]]
     extra
   end
 end

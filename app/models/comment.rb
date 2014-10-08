@@ -4,10 +4,10 @@ class Comment < ActiveRecord::Base
 
   scope :latest_order, ->{ order(created_at: :desc) }
 
-  after_save :create_activities
+  after_create :create_activities
 
   def create_activities
     product.activities.create(content: "#{user.full_name} commented on your product '#{product.name}'",
-                              user_id: product.user_id, sender_id: user_id)
+                              user_id: product.user_id, sender_id: user_id, category: Activity::TYPE[:comment])
   end
 end

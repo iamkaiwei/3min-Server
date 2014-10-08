@@ -8,7 +8,7 @@ class Like < ActiveRecord::Base
   scope :of_product, ->(product_id){ where(product_id: product_id) }
   scope :of_user, ->(user_id){ where(user_id: user_id) }
 
-  after_save :create_activities
+  after_create :create_activities
 
   def self.create_and_increase_product_likes args
     transaction do
@@ -26,6 +26,6 @@ class Like < ActiveRecord::Base
 
   def create_activities
     product.activities.create(content: "#{user.full_name} liked your product '#{product.name}'",
-                              user_id: product.user_id, sender_id: user_id)
+                              user_id: product.user_id, sender_id: user_id, category: Activity::TYPE[:like])
   end
 end
