@@ -7,7 +7,7 @@ class Api::V1::ConversationsController < Api::BaseController
     return @conversation = product.conversations.create(user_one: current_api_user.id, user_two: @recipient.id, offer: params[:offer]) unless @conversation
 
     message = "#{current_api_user.full_name} offered: #{params[:offer]} for Product #{product.name}"
-    extra = { product_id: @conversation.product_id, conversation_id: @conversation.id, channel_name: @conversation.channel_name }
+    extra = { product_id: @conversation.product_id, conversation_id: @conversation.id, channel_name: @conversation.channel_name, notification_type: :offer }
     Notifier.push(UrbanAirshipPayload.create(message, { alias: @recipient.alias_name }, extra))
 
   end

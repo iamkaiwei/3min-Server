@@ -65,10 +65,22 @@ class Api::V1::ProductsController < Api::BaseController
 	end
 
 	def followed
-		@products = Product..where(user_id: current_api_user.relationships.pluck(:followed_id)).order(updated_at: :desc)
+		@products = Product.where(user_id: current_api_user.relationships.pluck(:followed_id)).order(updated_at: :desc)
 		@products = @products.where(category_id: params[:category_id]) if params[:category_id].present?
 		@products = @products.paginate(:page => params[:page], :per_page => params[:per_page]) if params[:per_page].present? or params[:page].present?
 		load_liked_product_ids
+	end
+
+	def sold
+		product = current_api_user.products.find(params[:id])
+		receiver = User.find(params[:user_id])
+		schedule = Schedule.create!
+		message = "Please give #{product.user.full_name} your feedback about the product '#{product.name}'"
+		extra = { product_id: product.id, schedule_id: schedule.id, notification_type: :feedback }
+		schedule = Notifier.schedule(UrbanAirshipPayload.schedule([3.days.from_now, 6.days.from_now], message, { alias: receiver.alias_name }, extra))
+		return render_failure(details: schedule['error']) unless schedule['ok']
+		schedule.update!(operation_id: schedule['schedule_urls'].last)
+		render_success
 	end
 
 	private

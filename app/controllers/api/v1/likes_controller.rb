@@ -5,7 +5,7 @@ class Api::V1::LikesController < Api::BaseController
     return render_failure unless rs
 
     message = "#{current_api_user.full_name} liked your product '#{product.name}'"
-    extra = { product_id: product.id }
+    extra = { product_id: product.id, notification_type: :like }
     Notifier.push(UrbanAirshipPayload.create(message, { alias: product.user.alias_name }, extra))
     render_success
   end

@@ -8,7 +8,11 @@ class Api::V1::CommentsController < Api::BaseController
   def create
     product = Product.find(params[:product_id])
     comment = product.comments.new(comment_params.merge(user_id: current_api_user.id))
-    comment.save ? render_success : render_failure
+    return render_failure unless comment.save
+    message = "#{current_api_user.full_name} commented on your product '#{product.name}' !"
+    extra = { product_id: product.id, notification_type: :comment }
+    Notifier.push(UrbanAirshipPayload.create(message, { alias: product.user.alias_name }, extra))
+    render_success
   end
 
   def update

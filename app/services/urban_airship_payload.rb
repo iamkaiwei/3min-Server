@@ -1,5 +1,16 @@
 class UrbanAirshipPayload
+
+  NOTIFICATION_TYPE = {
+    chat: 1,
+    offer: 2,
+    like: 3,
+    follow: 4,
+    comment: 5,
+    feedback: 6
+  }
+
   def self.create message, audience = 'all', extra = {}
+    extra = normalize_extra extra
     {
       audience: audience,
       device_types: ["ios", "android"],
@@ -19,5 +30,29 @@ class UrbanAirshipPayload
         }
       }
     }
+  end
+
+  def self.schedule time, message, audience = 'all', extra = {}
+    payload = {
+      name: 'feedback',
+      schedule: {
+        scheduled_time: nil
+      },
+      push: create(message, audience, extra)
+    }
+    time.collect do |t|
+      temp_payload = payload.dup
+      temp_payload[:schedule][:scheduled_time] = format_time(t)
+      temp_payload
+    end
+  end
+
+  def self.format_time time
+    time.utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+  end
+
+  def self.normalize_extra extra
+    extra[:notification_type] = NOTIFICATION_TYPE[extra[:notification_type]]
+    extra
   end
 end

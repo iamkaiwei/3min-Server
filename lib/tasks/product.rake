@@ -7,7 +7,7 @@ namespace :product do
       if product
         Like.create_and_increase_product_likes(user_id: kaiwei.id, product_id: product.id)
         message = "#{kaiwei.full_name} liked your product '#{product.name}'"
-        extra = { product_id: product.id }
+        extra = { product_id: product.id, notification_type: :like }
         Notifier.push(UrbanAirshipPayload.create(message, { alias: product.user.alias_name }, extra))
       end
     end
