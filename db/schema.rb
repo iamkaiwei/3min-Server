@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141008111900) do
+ActiveRecord::Schema.define(version: 20141009080714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -185,7 +185,7 @@ ActiveRecord::Schema.define(version: 20141008111900) do
     t.text     "description"
     t.decimal  "price"
     t.boolean  "sold_out",    default: false
-    t.integer  "likes",       default: 0
+    t.integer  "likes_count", default: 0
     t.integer  "dislikes"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -198,7 +198,7 @@ ActiveRecord::Schema.define(version: 20141008111900) do
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
   add_index "products", ["dislikes"], name: "index_products_on_dislikes", using: :btree
-  add_index "products", ["likes"], name: "index_products_on_likes", using: :btree
+  add_index "products", ["likes_count"], name: "index_products_on_likes_count", using: :btree
   add_index "products", ["name"], name: "index_products_on_name", using: :btree
   add_index "products", ["price"], name: "index_products_on_price", using: :btree
   add_index "products", ["sold_out"], name: "index_products_on_sold_out", using: :btree
