@@ -14,14 +14,14 @@ class Like < ActiveRecord::Base
     transaction do
       like = Like.create(args)
       return false unless like.persisted?
-      like.product.update(likes: like.product.likes_count.to_i + 1)
+      like.product.update(likes_count: like.product.likes_count.to_i + 1)
     end
   end
 
   def destroy_and_decrease_product_likes
     return false unless destroy
     product.activities.where(user_id: product.user_id, sender_id: user_id).delete_all
-    product.update(likes: product.likes_count.to_i - 1)
+    product.update(likes_count: product.likes_count.to_i - 1)
   end
 
   def create_activities
