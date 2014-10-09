@@ -43,7 +43,8 @@ class UrbanAirshipPayload
   end
 
   def self.normalize_extra extra
-    extra[:notification_type] = Activity::TYPE[extra[:notification_type]]
+    notification_type = Activity::TYPE[extra[:notification_type]]
+    extra[:notification_type] = notification_type if notification_type
     extra
   end
 end

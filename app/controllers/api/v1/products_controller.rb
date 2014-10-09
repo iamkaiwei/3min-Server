@@ -76,7 +76,7 @@ class Api::V1::ProductsController < Api::BaseController
 		receiver = User.find(params[:user_id])
 		schedule = Schedule.create!
 		message = "Please give #{product.user.full_name} your feedback about the product '#{product.name}'"
-		extra = { product_id: product.id, schedule_id: schedule.id, notification_type: :feedback }
+		extra = { product_id: product.id, schedule_id: schedule.id, notification_type: 0 }
 		schedule = Notifier.schedule(UrbanAirshipPayload.schedule([3.days.from_now, 6.days.from_now], message, { alias: receiver.alias_name }, extra))
 		return render_failure(details: schedule['error']) unless schedule['ok']
 		schedule.update!(operation_id: schedule['schedule_urls'].last)
