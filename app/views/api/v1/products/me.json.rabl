@@ -1,5 +1,5 @@
 collection @products
-attributes :id, :name, :description, :price, :likes, :sold_out, :venue_id, :venue_name, :venue_long, :venue_lat
+attributes :id, :name, :description, :price, :likes_count, :sold_out, :venue_id, :venue_name, :venue_long, :venue_lat
 
 node(:create_time) { |p| p.created_at.to_i }
 node(:update_time) { |p| p.updated_at.to_i }

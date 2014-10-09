@@ -57,7 +57,7 @@ else
 		puts "Creating 'prod#{category_id}'"
 		product = Product.create(:name => "prod#{category_id}", :user_id => 2, :category_id => category_id,
 								 :description => Faker::Lorem.paragraph(5), :price => Random.rand(100..5000),
-								 :likes => Random.rand(1000), :dislikes => Random.rand(1000))
+								 :likes_count => Random.rand(1000), :dislikes => Random.rand(1000))
 
 		image_file_names.each do |file_name|
 			# product.images.create(:content => File.new("#{image_location}/#{file_name}"))

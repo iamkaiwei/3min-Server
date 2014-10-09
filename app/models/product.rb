@@ -14,7 +14,7 @@ class Product < ActiveRecord::Base
 
 	validates_associated :user, :category
 
-  validates :likes, numericality: true, allow_nil: true
+  validates :likes_count, numericality: true, allow_nil: true
 
   scope :recently, ->(time){ where("(:time - created_at) >= (interval '1 day') AND (:time - created_at) <= (interval '3 days')", time: time) }
 end

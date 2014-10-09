@@ -12,7 +12,7 @@ end
 node(:latest_update) { |c| c.updated_at.to_i }
 
 child(:product) do
-  attributes :id, :name, :description, :price, :sold_out, :likes, :venue_id, :venue_name, :venue_long, :venue_lat, :user_id
+  attributes :id, :name, :description, :price, :sold_out, :likes_count, :venue_id, :venue_name, :venue_long, :venue_lat, :user_id
 
   child(:images) do |image|
     attributes :id, :name, :description
