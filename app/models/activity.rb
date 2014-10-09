@@ -13,8 +13,6 @@ class Activity < ActiveRecord::Base
   }
 
   def display_image_url
-    return sender.avatar unless subject
-
     if subject.respond_to?(:product)
       display_image = subject.product.images.first
       display_image.content.url(:thumb) if display_image
