@@ -10,6 +10,7 @@ class Product < ActiveRecord::Base
   has_many :activities, as: :subject
   has_many :comments, dependent: :destroy
   has_many :feedbacks
+  has_many :likes
 
 	validates_associated :user, :category
 

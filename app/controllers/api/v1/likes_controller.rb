@@ -1,4 +1,9 @@
 class Api::V1::LikesController < Api::BaseController
+  def index
+    product = Product.find(params[:product_id])
+    @users = product.likes.paginate(:page => params[:page], :per_page => params[:per_page]).includes(:user).collect { |like| like.user }
+  end
+
   def create
     product = Product.find(params[:product_id])
     rs = Like.create_and_increase_product_likes(user_id: current_api_user.id, product_id: product.id)
