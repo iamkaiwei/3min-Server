@@ -14,6 +14,8 @@ class Feedback < ActiveRecord::Base
   after_destroy :descrease_counter
   after_create :create_activities
 
+  scope :latest_order, ->{ order(created_at: :desc) }
+
   private
 
   def increase_counter
