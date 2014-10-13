@@ -37,7 +37,7 @@ ThreeminsServer::Application.routes.draw do
       end
 
       resources :products, :except => [:new, :edit] do
-        resource :likes, only: [:create, :destroy, :index]
+        resource :likes, only: [:create, :destroy]
 
         collection do
           get :me
@@ -50,6 +50,7 @@ ThreeminsServer::Application.routes.draw do
 
         get :show_offer, on: :member
         get :sold, on: :member
+        get 'likes', to: 'likes#index'
 
         resources :comments, only: [:index, :create]
       end
