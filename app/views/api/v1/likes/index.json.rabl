@@ -1,2 +1,2 @@
 collection @users
-attributes :id, :name, :avatar
+attributes :id, :full_name, :avatar
