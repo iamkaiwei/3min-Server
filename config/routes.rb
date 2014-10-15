@@ -77,6 +77,8 @@ ThreeminsServer::Application.routes.draw do
       resources :relationships, only: :create do
         delete :unfollow, on: :collection
       end
+
+      resources :feedbacks, only: [:index, :create]
     end
   end
 end
