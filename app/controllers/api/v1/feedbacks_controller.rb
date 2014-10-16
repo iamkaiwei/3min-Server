@@ -1,7 +1,7 @@
 class Api::V1::FeedbacksController < Api::BaseController
   def index
     user = User.find(params[:user_id])
-    @feedbacks = user.feedbacks.includes(:sender).latest_order
+    @feedbacks = user.feedbacks.includes(:sender, :product).latest_order
                        .paginate(:page => params[:page], :per_page => params[:per_page])
   end
 
