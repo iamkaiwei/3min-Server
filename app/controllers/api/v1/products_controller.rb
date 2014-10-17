@@ -77,7 +77,7 @@ class Api::V1::ProductsController < Api::BaseController
 		schedule = Schedule.create!
 		message = "Please give #{product.user.full_name} your feedback about the product '#{product.name}'"
 		extra = { product_id: product.id, schedule_id: schedule.id, notification_type: 0 }
-		result = Notifier.schedule(UrbanAirshipPayload.schedule([ENV['FEEDBACK_REMIND_MINUTES'].to_i.minutes.from_now, [ENV['FEEDBACK_SECOND_REMIND_MINUTES'].to_i.minutes.from_now], message, { alias: receiver.alias_name }, extra))
+		result = Notifier.schedule(UrbanAirshipPayload.schedule([ENV['FEEDBACK_REMIND_MINUTES'].to_i.minutes.from_now, ENV['FEEDBACK_SECOND_REMIND_MINUTES'].to_i.minutes.from_now], message, { alias: receiver.alias_name }, extra))
 		return render_failure(details: result['error']) unless result['ok']
 		schedule.update!(operation_id: result['schedule_urls'].last)
 		render_success
