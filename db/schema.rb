@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009080714) do
+ActiveRecord::Schema.define(version: 20141029085036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -280,6 +280,7 @@ ActiveRecord::Schema.define(version: 20141009080714) do
     t.integer  "positive_count",     default: 0
     t.integer  "negative_count",     default: 0
     t.integer  "normal_count",       default: 0
+    t.integer  "activities_count",   default: 0
   end
 
   add_index "users", ["birthday"], name: "index_users_on_birthday", using: :btree

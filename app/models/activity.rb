@@ -1,6 +1,6 @@
 class Activity < ActiveRecord::Base
   belongs_to :subject, polymorphic: true
-  belongs_to :user
+  belongs_to :user, counter_cache: true
   belongs_to :sender, class_name: User
 
   TYPE = {

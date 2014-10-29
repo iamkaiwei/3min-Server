@@ -11,6 +11,8 @@ ThreeminsServer::Application.routes.draw do
   # devise_for :users
 
   root :to => "home#index"
+  get '/vui', to: 'home#vui'
+  get '/buon', to: 'home#buon'
 
   namespace :api do
     namespace :v1 do

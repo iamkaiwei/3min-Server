@@ -17,4 +17,18 @@ class Product < ActiveRecord::Base
   validates :likes_count, numericality: true, allow_nil: true
 
   scope :recently, ->(time){ where("(:time - created_at) >= (interval '1 day') AND (:time - created_at) <= (interval '3 days')", time: time) }
+
+  after_create :increase_product_count
+  after_destroy :decrease_product_count
+
+
+  private
+
+  def increase_product_count
+    Counter.instance.increase_product_count
+  end
+
+  def decrease_product_count
+    Counter.instance.decrease_product_count
+  end
 end

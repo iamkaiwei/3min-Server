@@ -3,6 +3,7 @@ attributes :id, :name, :description, :price, :sold_out, :likes_count, :venue_id,
 
 node(:create_time) { |p| p.created_at.to_i }
 node(:update_time) { |p| p.updated_at.to_i }
+node(:comments_count) { |p| p.comments.count }
 
 child(:images) do |image|
   attributes :id, :name, :description, :created_at, :updated_at
