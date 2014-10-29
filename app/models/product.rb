@@ -25,10 +25,10 @@ class Product < ActiveRecord::Base
   private
 
   def increase_product_count
-    Counter.instance.increase_product_count
+    Counter.instance.product_count += 1
   end
 
   def decrease_product_count
-    Counter.instance.decrease_product_count
+    Counter.instance.product_count -= 1
   end
 end
