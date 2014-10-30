@@ -7,7 +7,7 @@ class Api::V1::ConversationRepliesController < Api::BaseController
     Notifier.push(UrbanAirshipPayload.create(message, { alias: @recipient.alias_name }, extra))
 
     @conversation.conversation_replies.create(user_id: current_api_user.id, reply: params[:message])
-    render_success(u)
+    render_success
   end
 
   def bulk_create
