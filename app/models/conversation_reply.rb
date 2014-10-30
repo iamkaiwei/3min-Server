@@ -1,7 +1,7 @@
 class ConversationReply < ActiveRecord::Base
   belongs_to :conversation, touch: true
   belongs_to :user
-  validates :reply, length: { minimum: 3 }
+  validates :reply, length: { minimum: 1 }
 
   scope :latest_message, ->(conversation_ids){ where("id IN (SELECT MAX(id)
                                                               from conversation_replies
