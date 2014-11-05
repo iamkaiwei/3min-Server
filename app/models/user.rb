@@ -97,6 +97,7 @@ class User < ActiveRecord::Base
 
 	Feedback::STATUS.each do |stt|
 		define_method("#{stt}_percent") do
+			return 0 if number_of_feedbacks == 0
 			send("#{stt}_count") * 100 / number_of_feedbacks
 		end
 	end
