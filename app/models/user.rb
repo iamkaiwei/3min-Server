@@ -95,6 +95,16 @@ class User < ActiveRecord::Base
 		relationships.where(followed_id: user_id).any?
 	end
 
+	Feedback::STATUS.each do |stt|
+		define_method("#{stt}_percent") do
+			send("#{stt}_count") * 100 / number_of_feedbacks
+		end
+	end
+
+	def number_of_feedbacks
+		positive_count + negative_count + normal_count
+	end
+
 	private
 
 		def destroy_conversations
