@@ -18,7 +18,7 @@ class Api::V1::ProductsController < Api::BaseController
 
 	def update
 		return render_failure(details: "You are not owner of this product") unless @product.user_id == current_api_user.id
-		return render_failure(:details => @product.errors.full_messages.join("\n")) unless @product.update(product_params)
+		return render_failure(:details => @product.errors.full_messages.join("\n")) unless @product.update(update_product_params)
 		render_success(:product => render_json_rabl(@product, :show))
 	end
 
@@ -92,6 +92,13 @@ class Api::V1::ProductsController < Api::BaseController
 	def product_params
 		parameters = params.permit(:user_id, :name, :category_id, :description, :price, :sold_out, :buyer_id, :tag_list, :venue_id, :venue_name, :venue_long, :venue_lat)
 		parameters[:images] = params[:images].map { |image| Image.create(:content => image) } if params[:images].present?
+
+		return parameters
+	end
+
+	def update_product_params
+		parameters = params.permit(:user_id, :name, :category_id, :description, :price, :sold_out, :buyer_id, :tag_list, :venue_id, :venue_name, :venue_long, :venue_lat)
+		parameters[:images_attributes] ||= params[:images] if params[:images].present?
 
 		return parameters
 	end

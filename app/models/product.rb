@@ -21,6 +21,7 @@ class Product < ActiveRecord::Base
   after_create :increase_product_count
   after_destroy :decrease_product_count
 
+  accepts_nested_attributes_for :images
 
   private
 
