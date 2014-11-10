@@ -6,7 +6,7 @@ node(:update_time) { |p| p.updated_at.to_i }
 node(:liked) { |p| @likes.include?(p.id) }
 
 child(:images) do |image|
-  attributes :id, :name, :description, :created_at, :updated_at
+  attributes :id, :name, :description, :created_at, :updated_at, :dimensions
 
   node(:thumb) { |img| img.content.url(:thumb) }
   node(:square) { |img| img.content.url(:square) }
