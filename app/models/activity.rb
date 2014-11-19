@@ -13,7 +13,7 @@ class Activity < ActiveRecord::Base
   }
 
   def display_image_url
-    if subject.respond_to?(:product)
+    if subject.respond_to?(:product) && subject.product.present?
       display_image = subject.product.images.first
       display_image.content.url(:thumb) if display_image
     end
