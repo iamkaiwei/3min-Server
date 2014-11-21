@@ -38,7 +38,7 @@ ThreeminsServer::Application.routes.draw do
 
       resources :products, :except => [:new, :edit] do
         resource :likes, only: [:create, :destroy]
-
+        resources :images, only: :create
         collection do
           get :me
           get :offer
